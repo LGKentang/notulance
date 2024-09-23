@@ -1,6 +1,6 @@
 import { collection, getDocs, doc, getDoc, setDoc, addDoc } from "firebase/firestore";
 import { db } from '../firebase/firebase';
-import { FirebaseUser } from "@/interfaces/user";
+import { FirebaseUser } from "@/interfaces/firebase-user";
 
 
 async function createUser(user: FirebaseUser) {
@@ -25,7 +25,7 @@ async function getAllUsers() {
         const usersList = userSnapshot.docs.map(doc => ({
             id: doc.id,
             ...doc.data()
-        }));
+        } as FirebaseUser));
 
         return usersList;
     } catch (error) {
@@ -40,7 +40,7 @@ async function getUserById(userId: string) {
         const userDoc = await getDoc(userDocRef);
 
         if (userDoc.exists()) {
-            return { id: userDoc.id, ...userDoc.data() };
+            return { id: userDoc.id, ...userDoc.data() } as FirebaseUser;
         } else {
             console.error("No such user exists!");
             return null;

@@ -1,5 +1,5 @@
 import { getAllUsers } from "@/api/user-api";
-import { FirebaseUser } from "@/interfaces/user";
+import { FirebaseUser } from "@/interfaces/firebase-user";
 import { useEffect, useState } from "react";
 
 const Home = () => {
