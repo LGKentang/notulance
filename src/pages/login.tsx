@@ -1,11 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { userLogin } from "@/handlers/auth-handler";
 import { useState } from "react";
 
 const Login = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+
+    const handleLogin = async() => {
+        const response = await userLogin(email, password);
+
+        console.log(response)   
+    } 
 
     return (
         <div className="w-screen h-screen flex justify-center">
@@ -39,6 +46,7 @@ const Login = () => {
                         <Button 
                             variant="default"
                             className="w-full"
+                            onClick={() => handleLogin()}
                         >
                             Log In
                         </Button>
