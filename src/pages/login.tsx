@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input";
 import { userLogin } from "@/handlers/auth-handler";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 const Login = () => {
     const [email, setEmail] = useState<string>("");
@@ -51,6 +52,7 @@ const Login = () => {
                             Log In
                         </Button>
                     </CardFooter>
+                    <a href="/register" className={cn("m-5")}>No account yet? Sign Up Here</a>
                 </Card>
             </div>
         </div>
