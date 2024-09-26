@@ -1,6 +1,6 @@
 import { collection, getDocs, doc, getDoc, setDoc, addDoc, where, query, documentId } from "firebase/firestore";
 import { db } from '../firebase/firebase';
-import { Note } from "@/interfaces/note"; 
+import { Note, SimpleNote } from "@/interfaces/general/note"; 
 
 async function createNote(note: Note) {
     try {
@@ -15,15 +15,16 @@ async function createNote(note: Note) {
     }
 }
 
-async function getAllNotes() {
+async function getAllNotes(titleOnly?: boolean) : Promise<Note[] | SimpleNote[]> {
     try {
         const notesCollection = collection(db, 'notes');
         const notesSnapshot = await getDocs(notesCollection);
 
-        const notesList = notesSnapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-        }));
+        const notesList = notesSnapshot.docs.map(doc => {
+            return titleOnly ? 
+                { id: doc.id, title: doc.data().title } as SimpleNote: 
+                { id: doc.id, ...doc.data() } as Note; 
+        });
 
         return notesList;
     } catch (error) {
@@ -31,6 +32,10 @@ async function getAllNotes() {
         throw error;
     }
 }
+
+
+
+
 
 async function getNoteById(noteId: string) {
     try {
@@ -79,27 +84,6 @@ async function updateNoteById(noteId: string, updatedNote: Partial<Note>) {
     }
 }
 
-async function searchNotes(searchTerm: string) {
-    try {
-        const notesCollection = collection(db, 'notes');
-        const q = query(
-            notesCollection,
-            where('title', '>=', searchTerm), 
-            where('title', '<=', searchTerm + '\uf8ff') 
-        );
-
-        const notesSnapshot = await getDocs(q);
-        const notesList = notesSnapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-        }));
-
-        return notesList;
-    } catch (error) {
-        console.error("Error searching notes:", error);
-        throw error;
-    }
-}
 
 
-export { createNote, getAllNotes, getNoteById, updateNoteById, searchNotes};
+export { createNote, getAllNotes, getNoteById, updateNoteById, };

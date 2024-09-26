@@ -1,6 +1,6 @@
 import { collection, getDocs, doc, getDoc, setDoc, addDoc } from "firebase/firestore";
 import { db } from '../firebase/firebase';
-import { FirebaseUser } from "@/interfaces/firebase-user";
+import { FirebaseUser } from "@/interfaces/user/firebase-user";
 
 
 async function createUser(user: FirebaseUser) {

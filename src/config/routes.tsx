@@ -1,4 +1,5 @@
 import Error from "@/components/fallback/error";
+import ApiTesting from "@/pages/api_testing";
 import Home from "@/pages/home";
 import Login from "@/pages/login";
 import Register from "@/pages/register";
@@ -20,6 +21,11 @@ const router = createBrowserRouter([
         element: <Register />,
         errorElement: <Error />,
     },
+    {
+        path: '/api_testing',
+        element: <ApiTesting/>,
+        errorElement: <Error/>
+    }
 ])
 
 export default router;

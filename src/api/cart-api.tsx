@@ -1,15 +1,14 @@
 import { collection, getDocs, doc, getDoc, setDoc, addDoc, Timestamp } from "firebase/firestore";
 import { db } from '../firebase/firebase';
-import { Cart, CartItem, Bundle } from "@/interfaces/cart";
-import { Note } from "@/interfaces/note";
+import { Cart, CartItem, Bundle } from "@/interfaces/transaction/cart";
+import { Note } from "@/interfaces/general/note";
 
 
-async function createCart(userId: string) {
+async function createCart() {
     try {
         const cart: Cart = {
             items: [],
             totalPrice: 0,
-            userId,
             createdAt: Timestamp.now(),
             updatedAt: Timestamp.now(),
         };

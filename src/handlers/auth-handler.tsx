@@ -1,6 +1,7 @@
+import { createCart } from "@/api/cart-api";
 import { createUser } from "@/api/user-api";
 import { auth } from "@/firebase/firebase"
-import { FirebaseUser } from "@/interfaces/firebase-user";
+import { FirebaseUser } from "@/interfaces/user/firebase-user";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
 
 async function userLogin(email: string, password: string) {
@@ -8,7 +9,7 @@ async function userLogin(email: string, password: string) {
         const response = await signInWithEmailAndPassword(auth, email, password);
 
         console.log(response.user);
-    } catch (error : any) {
+    } catch (error: any) {
         let errorMessage = "Error while signing in.";
         if (error.code === 'auth/wrong-password') {
             errorMessage = "Incorrect password. Please try again.";
@@ -20,11 +21,11 @@ async function userLogin(email: string, password: string) {
             errorMessage = "Too many failed login attempts. Try again later.";
         }
         console.error("Error while trying signin you in :", errorMessage);
-        throw new Error(errorMessage); 
+        throw new Error(errorMessage);
     }
 }
 
-async function userRegister(name: string, email: string, password: string, confirmPassword: string){
+async function userRegister(name: string, email: string, password: string, confirmPassword: string) {
 
     const trimmedName = name.trim();
     const trimmedEmail = email.trim();
@@ -35,7 +36,7 @@ async function userRegister(name: string, email: string, password: string, confi
         console.log("All fields must be filled");
         return;
     }
-    if(trimmedName.length < 3){
+    if (trimmedName.length < 3) {
         console.log("Name must be 2 more than characters");
         return;
     }
@@ -46,10 +47,12 @@ async function userRegister(name: string, email: string, password: string, confi
 
     try {
         const res = await createUserWithEmailAndPassword(auth, email, password);
+        const cartId = await createCart();
 
-        const user: FirebaseUser ={
+        const user: FirebaseUser = {
             name: name,
             email: email,
+            cartId: cartId,
             role: "",
             authId: res.user.uid
         }
