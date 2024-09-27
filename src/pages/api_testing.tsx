@@ -36,15 +36,25 @@ const ApiTesting = () => {
     // useEffect(() => {
     //     const fetchUserData = async () => {
     //         const data = await searchNotes("", true, {
-    //             grade:4
+    //             grade:'asc'
     //         } as Filter);
     //         console.log(data);
     //     }
     //     fetchUserData()
     // }, [])
 
+
+
+    // Function to test something with div
+    // function doSomething(){
+
+    // }
+
     return <>
 
+        {/* <div onClick={doSomething()}>
+            Do Something!
+        </div> */}
     </>
 }
 

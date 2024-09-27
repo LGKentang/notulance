@@ -65,7 +65,7 @@ async function getNotesByIds(noteIds: string[]) {
             ...doc.data(),
         }));
 
-        return notesList; // Return an array of notes
+        return notesList;
     } catch (error) {
         console.error("Error fetching notes by IDs:", error);
         throw error;

@@ -1,8 +1,7 @@
 export interface Filter{
-    grade? : number;
-    startPrice? : number;
-    endPrice? : number;
-    subject? : string;
-    university? : string;
-    ranking? : number;
+    grade? : 'asc' | 'desc';
+    price? : 'asc' | 'desc';
+    subject? : 'asc' | 'desc';
+    university? :'asc' | 'desc';
+    ranking? :'asc' | 'desc';
 }
