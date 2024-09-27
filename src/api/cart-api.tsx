@@ -24,23 +24,26 @@ async function createCart() {
     }
 }
 
-async function getCartByUserId(userId: string) {
-    try {
-        const cartsCollection = collection(db, 'carts');
-        const cartSnapshot = await getDocs(cartsCollection);
+// TODO : make the update cart function respond to the item id,
+// so if the item is the same, reject any changes
 
-        const cart = cartSnapshot.docs.find(doc => doc.data().userId === userId);
-        if (cart) {
-            return { id: cart.id, ...cart.data() } as Cart;
+async function getCartById(cartId: string) {
+    try {
+        const cartDocRef = doc(db, 'carts', cartId);
+        const cartDoc = await getDoc(cartDocRef);
+
+        if (cartDoc.exists()) {
+            return { id: cartDoc.id, ...cartDoc.data() } as Cart;
         } else {
-            console.error("No cart found for this user.");
+            console.error("No such note exists!");
             return null;
         }
     } catch (error) {
-        console.error("Error fetching cart by user ID:", error);
+        console.error("Error fetching note by ID:", error);
         throw error;
     }
 }
+
 
 async function updateCart(cartId: string, updatedCart: Partial<Cart>) {
     try {
@@ -72,19 +75,21 @@ function calculateTotalPrice(cart: Cart): number {
 
 
 
-async function addItemToCart(cartId: string, cartItem: CartItem) {
+async function addItemToCart(userId: string, cartItem: CartItem) {
     try {
-        const cart = await getCartByUserId(cartId);
+        const cart = await getCartById(userId);
         if (!cart) throw new Error("Cart not found");
+        if (!cart.id) throw new Error("Cart ID not exist")
+
 
         cart.items.push(cartItem);
         cart.totalPrice = calculateTotalPrice(cart)
 
-        await updateCart(cartId, { items: cart.items, totalPrice: cart.totalPrice, updatedAt: Timestamp.now() });
+        await updateCart(cart.id, { items: cart.items, totalPrice: cart.totalPrice, updatedAt: Timestamp.now() });
     } catch (error) {
         console.error("Error adding item to cart:", error);
         throw error;
     }
 }
 
-export { createCart, getCartByUserId, updateCart, addItemToCart };
+export { createCart, getCartById, updateCart, addItemToCart };

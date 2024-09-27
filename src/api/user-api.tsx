@@ -1,4 +1,4 @@
-import { collection, getDocs, doc, getDoc, setDoc, addDoc } from "firebase/firestore";
+import { collection, getDocs, doc, getDoc, setDoc, addDoc, query, where } from "firebase/firestore";
 import { db } from '../firebase/firebase';
 import { FirebaseUser } from "@/interfaces/user/firebase-user";
 
@@ -51,4 +51,25 @@ async function getUserById(userId: string) {
     }
 }
 
-export { createUser, getAllUsers, getUserById };
+async function getUserByAuthId(userAuthId: string): Promise<FirebaseUser | null> {
+    try {
+        const usersRef = collection(db, 'users'); 
+        const q = query(usersRef, where("authId", "==", userAuthId));
+
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.empty) {
+            console.error("No user found with the specified auth ID!");
+            return null; 
+        }
+
+        const userData = querySnapshot.docs[0]; 
+        return { id: userData.id, ...userData.data() } as FirebaseUser; 
+        
+    } catch (error) {
+        console.error("Error fetching user by auth ID:", error);
+        throw error;
+    }
+}
+
+export { createUser, getAllUsers, getUserById , getUserByAuthId };

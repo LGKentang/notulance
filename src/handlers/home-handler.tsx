@@ -25,8 +25,6 @@ async function searchNotes(query: string, useFilter: boolean, filter?: Filter): 
                 const noteA = a as Note;
                 const noteB = b as Note;
 
-                console.log(noteA, noteB)
-
                 const safeCompare = (valA: any, valB: any, order: 'asc' | 'desc') => {
                     if (valA === undefined) return order === 'asc' ? -1 : 1; 
                     if (valB === undefined) return order === 'asc' ? 1 : -1;  
@@ -67,9 +65,8 @@ async function searchNotes(query: string, useFilter: boolean, filter?: Filter): 
             });
         }
 
-        console.log(filteredNotes);
 
-        return filteredNotes.length > 0 ? filteredNotes.map(note => note.title) : null;
+        return filteredNotes.length > 0 ? filteredNotes.map(note => note.id ? note.id : "") : null;
 
     } catch (error) {
         console.error("Error searching notes:", error);

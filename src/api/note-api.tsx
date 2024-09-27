@@ -57,7 +57,7 @@ async function getNoteById(noteId: string) {
 async function getNotesByIds(noteIds: string[]) {
     try {
         const notesCollection = collection(db, 'notes');
-        const notesQuery = query(notesCollection, where(documentId(), 'in', noteIds)); // Using Firestore's 'in' operator
+        const notesQuery = query(notesCollection, where(documentId(), 'in', noteIds)); 
 
         const noteSnapshot = await getDocs(notesQuery);
         const notesList = noteSnapshot.docs.map(doc => ({
