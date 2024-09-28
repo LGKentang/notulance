@@ -57,14 +57,21 @@ async function getNoteById(noteId: string) {
 async function getNotesByIds(noteIds: string[]) {
     try {
         const notesCollection = collection(db, 'notes');
-        const notesQuery = query(notesCollection, where(documentId(), 'in', noteIds)); 
+        const notesList: any[] = [];
+        const chunks = [];
+        for (let i = 0; i < noteIds.length; i += 10) {
+            chunks.push(noteIds.slice(i, i + 10));
+        }
 
-        const noteSnapshot = await getDocs(notesQuery);
-        const notesList = noteSnapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data(),
-        }));
+        for (const chunk of chunks) {
+            const notesQuery = query(notesCollection, where(documentId(), 'in', chunk));
+            const noteSnapshot = await getDocs(notesQuery);
 
+            notesList.push(...noteSnapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data(),
+            })));
+        }
         return notesList;
     } catch (error) {
         console.error("Error fetching notes by IDs:", error);
@@ -86,4 +93,4 @@ async function updateNoteById(noteId: string, updatedNote: Partial<Note>) {
 
 
 
-export { createNote, getAllNotes, getNoteById, updateNoteById, };
+export { createNote, getAllNotes, getNoteById, updateNoteById, getNotesByIds};

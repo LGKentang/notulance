@@ -57,6 +57,9 @@ const Register = () => {
                             value={confirmPassword}
                             onChange={(e) => {setConfirmPassword(e.target.value)}}
                         />
+                        <a href="/login">
+                            <Button variant="link" className="p-0.5">Already have an account?</Button>
+                        </a>
                     </CardContent>
                     <CardFooter>
                         <Button 
