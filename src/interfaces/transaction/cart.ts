@@ -1,14 +1,15 @@
 import { Timestamp } from "firebase/firestore/lite";
-import { Note } from "./note";
+import { Note } from "../general/note";
 
 export interface Bundle {
-    bundleId: string;  
+    id?: string | null;  
     noteIds: string[];
     bundlePrice: number; 
+    discount : number;
 }
 
 export interface CartItem {
-    type: 'note' | 'bundle'; 
+    type: string; 
     item: Note | Bundle;
     quantity: number;            
 }
@@ -16,9 +17,8 @@ export interface CartItem {
 export interface Cart {
     id?:string;
     items: CartItem[];     
-    totalPrice: number; 
-    userId: string;             
+    totalPrice: number;         
     createdAt: Timestamp;   
-    updatedAt: Timestamp;            
+    updatedAt: Timestamp;      
 }
 

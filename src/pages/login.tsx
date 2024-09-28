@@ -23,8 +23,8 @@ const Login = () => {
             <div className="w-[50%] flex items-center">
                 <Card className="rounded-lg w-[400px]">
                     <CardHeader>
-                        <CardTitle>Log in</CardTitle>
-                        <CardDescription>Log in to Notulance.</CardDescription>
+                        <CardTitle>Welcome Back !</CardTitle>
+                        <CardDescription>Where have you been?</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <Input 
@@ -42,6 +42,9 @@ const Login = () => {
                             value={password}
                             onChange={(e) => {setPassword(e.target.value)}}
                         />
+                        <a href="/register">
+                            <Button variant="link" className="p-0.5">Don't have an account?</Button>
+                        </a>
                     </CardContent>
                     <CardFooter>
                         <Button 
@@ -52,7 +55,6 @@ const Login = () => {
                             Log In
                         </Button>
                     </CardFooter>
-                    <a href="/register" className={cn("m-5")}>No account yet? Sign Up Here</a>
                 </Card>
             </div>
         </div>

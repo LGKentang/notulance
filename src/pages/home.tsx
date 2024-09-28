@@ -1,6 +1,6 @@
 import { getAllUsers } from "@/api/user-api";
-import { NavBar } from "@/components/ui/navbar";
-import { FirebaseUser } from "@/interfaces/firebase-user";
+import { NavBar } from "@/components/navbar";
+import { FirebaseUser } from "@/interfaces/user/firebase-user";
 import { useEffect, useState } from "react";
 
 import {
