@@ -8,7 +8,7 @@ const NavBar = React.forwardRef<HTMLInputElement, InputProps>(
     return (
         <div className="flex p-7 items-center justify-between bg-white drop-shadow-2xl">
             <div id="left" className="flex">
-                <img src="/public/notulance.png" className="w-10 mx-5"/>
+                <img src="/notulance.png" className="w-10 mx-5"/>
                 <a href="" className="text-black text-3xl">Notulance</a>
             </div>
             <div id="right" className="w-1/4 flex items-center justify-between" 

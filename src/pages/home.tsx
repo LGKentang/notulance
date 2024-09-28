@@ -28,14 +28,14 @@ const Home = () => {
     return (
         <div className="w-screen h-screen font-itim">
             <NavBar/>
-            <div id="section-1">
-                <div id="absolute-1" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                    <img className="" src="../public/HomeImage.png"/>
+            <div id="section-1" className="bg-white">
+                <div id="absolute-1" className="absolute top-1/2 left-1/2 -translate-x-72 -translate-y-28">
+                    <img className="" src="/HomeImage.png"/>
                     <br/>
-                    <form className="flex space-x-6">
+                    <form className="flex space-x-2">
                         <Input type="text" placeholder="“Deep Learning Notes in BINUS University”" className="outline rounded-2xl"/>
-                        <Button type="submit" className="bg-white outline ring-black">
-                            <img src="../public/Search.png" className="w-10"/>
+                        <Button type="submit" className="bg-white">
+                            <img src="/Search.png" className="w-16"/>
                         </Button>
                     </form>
                 </div>
@@ -47,13 +47,13 @@ const Home = () => {
                 </div>
 
                 <div id="flex-1" className="flex items-start justify-between">
-                    <img src="../public/Home1AA.png" className="w-52"/>
-                    <img src="../public/Home1AB.png" />
+                    <img src="/Home1AA.png" className="w-52"/>
+                    <img src="/Home1AB.png" />
                 </div>
                 <div id="middle" className="h-36"></div>
                 <div id="flex-2" className="flex items-start justify-between">
-                    <img src="../public/Home1BA.png" />
-                    <img src="../public/Home1BB.png" />
+                    <img src="/Home1BA.png" />
+                    <img src="/Home1BB.png" />
                 </div>
                 {/* <h1>Get notes, or bucks. <br />
                 Whichever you need.</h1>
@@ -63,10 +63,10 @@ const Home = () => {
                 <Input className="w-1/2" /> */}
             </div>
             <div id="section-2">
-                <div id="container" className="p-20 flex items-center justify-between bg-[url('../public/BackgroundImage.png')]">
+                <div id="container" className="p-20 flex items-center justify-between bg-[url('/BackgroundImage.png')]">
                     <Card className="w-[350px] drop-shadow-2xl outline">
                         <CardContent>
-                            <img className=""  src="../public/Home2A.png" alt=""/>
+                            <img className=""  src="/Home2A.png" alt=""/>
                         </CardContent>
                         <CardHeader>
                             <CardTitle>Find any note</CardTitle>
@@ -75,7 +75,7 @@ const Home = () => {
                     </Card>
                     <Card className="w-[350px] drop-shadow-2xl outline">
                         <CardContent>
-                        <img className="w-64"  src="../public/Home2B.png" alt="" />
+                        <img className="w-64"  src="/Home2B.png" alt="" />
                         </CardContent>
                         <CardHeader>
                             <CardTitle>Turn notes to money.</CardTitle>
@@ -84,7 +84,7 @@ const Home = () => {
                     </Card>
                     <Card className="w-[350px] drop-shadow-2xl outline">
                         <CardContent>
-                        <img className="w-64" src="../public/Home2C.png" alt="" />
+                        <img className="w-64" src="/Home2C.png" alt="" />
                         </CardContent>
                         <CardHeader>
                             <CardTitle>Valid and trusted.</CardTitle>
@@ -99,8 +99,8 @@ const Home = () => {
                 <h1 className="mb-16">Anywhere, any note.</h1>
                 <br/>
                 <div id="container" className="ml-20 mr-36 flex justify-between items-start">
-                    <img src="../public/Home3A.png"/>
-                    <img src="../public/Home3B.png" className=""/>
+                    <img src="/Home3A.png"/>
+                    <img src="/Home3B.png" className=""/>
                 </div>
             </div>
             <div id="footer" className="p-10 bg-white flex justify-center">
