@@ -27,7 +27,7 @@ const Home = () => {
 
     return (
         <div className="w-screen h-screen font-itim">
-            <NavBar/>
+            <NavBar />
             <div id="section-1" className="bg-white">
                 <div id="absolute-1" className="absolute top-1/2 left-1/2 -translate-x-72 -translate-y-28">
                     <img className="" src="/HomeImage.png"/>

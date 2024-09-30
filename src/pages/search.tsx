@@ -27,7 +27,7 @@ const Search = () => {
 
 
     return (
-        <div className="w-screen h-screen flex flex-col">
+        <div className="w-screen h-screen flex flex-col overflow-scroll font-itim">
             <NavBar />
 
             {/* Search Bar */}
@@ -55,22 +55,22 @@ const Search = () => {
             {notes && notes.length > 0 ? (
                 <div className="grid px-44 grid-cols-3 justify-between gap-10">
                     {notes.map((note, index) => {
-                        
-
                         return(
-                            <Card key={index}>
-                                <CardHeader className="flex p-0 w-full max-h-48 items-center overflow-hidden">
-                                    <img src="/notulance.png" alt="" />
-                                </CardHeader>
-                                <Separator />
-                                <CardContent className="p-2 font-bold">
-                                    {note.title}
-                                </CardContent>
-                                <CardFooter className="flex justify-between p-3 text-sm">
-                                    <span>{note.university}</span>
-                                    <span>2024</span>
-                                </CardFooter>
-                            </Card>
+                            <a href={`/note/${note.id}`} key={index}>
+                                <Card>
+                                    <CardHeader className="flex p-0 w-full max-h-48 items-center overflow-hidden">
+                                        <img src="/notulance.png" alt="" />
+                                    </CardHeader>
+                                    <Separator />
+                                    <CardContent className="p-2">
+                                        {note.title}
+                                    </CardContent>
+                                    <CardFooter className="flex justify-between p-3 text-sm">
+                                        <span>{note.university}</span>
+                                        <span>2024</span>
+                                    </CardFooter>
+                                </Card>
+                            </a>
                         );
                     })}
                 </div>

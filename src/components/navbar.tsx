@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 
 const NavBar = () => {
   return (
-      <div className="w-full flex px-20 py-8 items-center justify-between">
+      <div className="w-full flex px-20 py-8 items-center justify-between font-itim">
           <div className="flex items-center">
               <a 
                 href="/"
@@ -14,8 +14,8 @@ const NavBar = () => {
               </a>
           </div>
           <div id="right" className="flex items-center space-x-16">
-              <a href="/search"><Button variant="link">Search</Button></a>
-              <a href="/"><Button variant="link">Sell</Button></a>
+              <a href="/note/search"><Button variant="link">Search</Button></a>
+              <a href="/note/sell"><Button variant="link">Sell</Button></a>
               <a href="/login"><Button variant="default">Sign In</Button></a>
           </div>
       </div>
