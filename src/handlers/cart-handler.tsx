@@ -32,11 +32,8 @@ async function validateBundle(cartItem : CartItem){
 
 
 async function checkoutCart(){
-    
     await checkout()
-
-
-
+    
 }
 
-export {addCartItemToCart}
+export {addCartItemToCart, checkoutCart}
