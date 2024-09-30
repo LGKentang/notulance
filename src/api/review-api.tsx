@@ -42,4 +42,4 @@ async function getReviewById(reviewId: string) {
 }
 
 
-export { getAllReviews }
+export { getAllReviews, getReviewById }
