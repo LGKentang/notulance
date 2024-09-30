@@ -3,8 +3,8 @@ import { Timestamp } from "firebase/firestore";
 export interface Payment{
     id? : string | null;
     userId : string;
-    amount : number;
-    status : string;
-    createdAt : Timestamp;
+    // amount : number;
+    // createdAt : Timestamp;
+    // status : string;
     paymentMethod : string;
 }

@@ -4,11 +4,11 @@ import { Cart } from "./cart";
 export interface Transaction{
     id? : string | null;
     buyerId : string;
-    sellerId : string;
     cart : Cart;
     price : number;
     currency : string;
     paymentStatus : string;
+    paymentMethod? : string;
     orderStatus : string;
     createdAt : Timestamp;
     updatedAt : Timestamp;

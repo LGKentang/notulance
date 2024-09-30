@@ -151,8 +151,7 @@ async function checkout(): Promise<Cart> {
             throw new Error("Cannot checkout with an empty cart");
         }
 
-
-        const snapshot = cart;
+        const snapshot = { ...cart };
         cart.items = [];
         cart.totalPrice = 0;
 
@@ -171,6 +170,7 @@ async function checkout(): Promise<Cart> {
         throw error;
     }
 }
+
 
 
 

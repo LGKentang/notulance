@@ -1,6 +1,7 @@
 import { collection, getDocs, doc, getDoc, setDoc, addDoc, query, where } from "firebase/firestore";
 import { db } from '../firebase/firebase';
 import { FirebaseUser } from "@/interfaces/user/firebase-user";
+import { getAuth } from "firebase/auth";
 
 
 async function createUser(user: FirebaseUser) {
@@ -72,4 +73,22 @@ async function getUserByAuthId(userAuthId: string): Promise<FirebaseUser | null>
     }
 }
 
-export { createUser, getAllUsers, getUserById , getUserByAuthId };
+async function getCurrentUserId(): Promise<string> {
+    const auth = getAuth(); 
+    const user = auth.currentUser;
+    
+    if (!user) {
+        throw new Error("User is not authenticated");
+    }
+
+    const authUser: FirebaseUser | null = await getUserByAuthId(user.uid);
+    
+    if (!authUser || !authUser.id) {
+        throw new Error("Authenticated user not found or missing user ID");
+    }
+
+    return authUser.id;
+}
+
+
+export { createUser, getAllUsers, getUserById , getUserByAuthId, getCurrentUserId };

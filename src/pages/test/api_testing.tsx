@@ -6,11 +6,13 @@ import { searchNotes } from "@/handlers/home-handler";
 import { Filter } from "@/interfaces/general/filter";
 import { Bundle, CartItem } from "@/interfaces/transaction/cart";
 import { createBundle, getBundleById } from "@/api/bundle-api";
-import { addCartItemToCart } from "@/handlers/cart-handler";
+import { addCartItemToCart, checkoutCart } from "@/handlers/cart-handler";
 import { startReviewNote, updateNoteReviewResult } from "@/handlers/review-handler";
 import { handleCreateBundle } from "@/handlers/bundle-handler";
 import { ReviewResult } from "@/interfaces/enum/review_enum";
-import { removeCartItem } from "@/api/cart-api";
+import { purchaseTransaction } from "@/handlers/payment-handler";
+import { PaymentMethod } from "@/interfaces/enum/transaction_enum";
+
 const ApiTesting = () => {
 
     // Create Note Test
@@ -81,41 +83,41 @@ const ApiTesting = () => {
     // }
 
 
-    async function addBundleToCart(){
-        const bundle : Bundle | null = await getBundleById("1QayKUgURrs6J6vuex4o")
+    async function addBundleToCart() {
+        const bundle: Bundle | null = await getBundleById("1QayKUgURrs6J6vuex4o")
         console.log(bundle)
-        if (!bundle){
+        if (!bundle) {
             throw new Error("Bundle does not exist")
         }
 
-        const cartItem : CartItem = {
-            item : bundle,
-            type : 'bundle'
-        } 
+        const cartItem: CartItem = {
+            item: bundle,
+            type: 'bundle'
+        }
 
 
         await addCartItemToCart(cartItem);
     }
 
-    async function addNoteToCart(){
-        const note : Note | null = await getNoteById("Svm4isPuFE9ZHukLKGHn")
-      
-        if (!note){
+    async function addNoteToCart() {
+        const note: Note | null = await getNoteById("Svm4isPuFE9ZHukLKGHn")
+
+        if (!note) {
             throw new Error("Note does not exist")
         }
 
-        const cartItem : CartItem = {
-            item : note,
-            type : 'note'
-        } 
+        const cartItem: CartItem = {
+            item: note,
+            type: 'note'
+        }
 
 
         await addCartItemToCart(cartItem);
     }
 
-    async function checkoutCart(){
-        await removeCartItem(1)
-    }
+    // async function checkoutCart(){
+    //     await removeCartItem(1)
+    // }
 
     // async function reviewNote() {
     //     const note = {
@@ -137,18 +139,40 @@ const ApiTesting = () => {
 
     //     await startReviewNote("510BlmJ335N0lps4Vj7m", note);
     // }
-    
+
     // async function acceptNoteReview(){
     //     const reviewId : string = "vGcmchmrgF6Ic48cnakL"
     //     await updateNoteReviewResult(reviewId,ReviewResult.Accepted);
     // }
 
+    async function checkoutAndCreateTransaction() {
+        await checkoutCart()
+    }
+
+    async function purchaseTransactionTest(){
+        await purchaseTransaction("mOhegvWjT6B9059Y6JGV",PaymentMethod.Gopay)
+    }
+
     return <>
 
         {/* <input type="file" />
         <br /><br /> */}
-        <button onClick={checkoutCart} className="text-white">
-            Do Something!
+
+        <button onClick={addBundleToCart} className="text-white mb-5">
+            Add Bundle
+        </button>
+        <br />
+        <button onClick={addNoteToCart} className="text-white mb-5">
+            Add Note
+        </button>
+        <br />
+        <button onClick={checkoutAndCreateTransaction} className="text-white mb-5">
+            Checkout
+        </button>
+
+
+        <button onClick={purchaseTransactionTest} className="text-white mb-5">
+            Purchase
         </button>
 
     </>
