@@ -16,7 +16,7 @@ export interface Transaction{
     refundDeadline : Timestamp
 }
 
-interface History{
+export interface History{
     status : string;
     timestamp  : Timestamp;
 }

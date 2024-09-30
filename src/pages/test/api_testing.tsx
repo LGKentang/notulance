@@ -7,6 +7,9 @@ import { Filter } from "@/interfaces/general/filter";
 import { Bundle, CartItem } from "@/interfaces/transaction/cart";
 import { createBundle, getBundleById } from "@/api/bundle-api";
 import { addCartItemToCart } from "@/handlers/cart-handler";
+import { startReviewNote, updateNoteReviewResult } from "@/handlers/review-handler";
+import { handleCreateBundle } from "@/handlers/bundle-handler";
+import { ReviewResult } from "@/interfaces/enum/review_enum";
 const ApiTesting = () => {
 
     // Create Note Test
@@ -51,7 +54,7 @@ const ApiTesting = () => {
     //     const noteIds = ["R5fyZYBd1miMIWomlMkV","ZGuc80SxtEa2WWP5FrU8","HSa7BYFmqOTqtuuASsUn"]
     //     const discount = 20;
 
-    //     const bundleId = await createBundle(noteIds, discount);
+    //     const bundleId = await handleCreateBundle(noteIds, discount);
     //     console.log(bundleId)
     // }
 
@@ -77,31 +80,56 @@ const ApiTesting = () => {
     // }
 
 
-    async function addBundleToCart(){
-        const bundle : Bundle | null = await getBundleById("4tsaPsHDYjJp8Bfd82Yr")
-        console.log(bundle)
-        if (!bundle){
-            throw new Error("Bundle does not exist")
-        }
+    // async function addBundleToCart(){
+    //     const bundle : Bundle | null = await getBundleById("4tsaPsHDYjJp8Bfd82Yr")
+    //     console.log(bundle)
+    //     if (!bundle){
+    //         throw new Error("Bundle does not exist")
+    //     }
 
-        const cartItem : CartItem = {
-            item : bundle,
-            quantity : 1,
-            type : 'bundle'
-        } 
+    //     const cartItem : CartItem = {
+    //         item : bundle,
+    //         quantity : 1,
+    //         type : 'bundle'
+    //     } 
 
 
-        await addCartItemToCart(cartItem);
-    }
+    //     await addCartItemToCart(cartItem);
+    // }
+
+    // async function reviewNote() {
+    //     const note = {
+    //         title: "Introduction to Artificial Neural Network",
+    //         description: "A comprehensive guide to deep learning concepts and techniques.",
+    //         writerId: "user-98765",
+    //         price: 29.99,
+    //         subject: "Artificial Intelligence",
+    //         releaseDate: Timestamp.fromDate(new Date("2024-09-26T11:06:39Z")),
+    //         university: "Harvard University",
+    //         grade: 4,
+    //         fileId: "file-abcde12345",
+    //         score: 4.5,
+    //         bundleId: null,
+    //         thumbnailUrl: "https://example.com/thumbnail.jpg",
+    //         totalPages: 100
+    //     } as Note
+
+
+    //     await startReviewNote("510BlmJ335N0lps4Vj7m", note);
+    // }
     
+    // async function acceptNoteReview(){
+    //     const reviewId : string = "vGcmchmrgF6Ic48cnakL"
+    //     await updateNoteReviewResult(reviewId,ReviewResult.Accepted);
+    // }
 
     return <>
 
         {/* <input type="file" />
         <br /><br /> */}
-        <button onClick={addBundleToCart} className="text-white">
+        {/* <button onClick={acceptNoteReview} className="text-white">
             Do Something!
-        </button>
+        </button> */}
 
     </>
 }

@@ -1,4 +1,4 @@
-import { collection, getDocs, doc, getDoc, setDoc, addDoc, where, query, documentId } from "firebase/firestore";
+import { collection, getDocs, doc, getDoc, setDoc, addDoc, where, query, documentId, writeBatch } from "firebase/firestore";
 import { db } from '../firebase/firebase';
 import { Note, SimpleNote } from "@/interfaces/general/note"; 
 
@@ -12,6 +12,25 @@ async function createNote(note: Note) {
     } catch (error) {
         console.error("Error creating note:", error);
         throw error;
+    }
+}
+
+async function updateNoteBundleIdInBatches(bundleId: string, noteIds: string[]) {
+    const batch = writeBatch(db); 
+
+    try {
+        noteIds.forEach((noteId) => {
+            const noteRef = doc(db, 'notes', noteId);
+
+            batch.update(noteRef, { bundleId: bundleId });
+        });
+
+        await batch.commit();
+        console.log("Batch update successful");
+
+    } catch (error) {
+        console.error("Error updating notes in batch: ", error);
+        throw error; 
     }
 }
 
@@ -37,13 +56,13 @@ async function getAllNotes(titleOnly?: boolean) : Promise<Note[] | SimpleNote[]>
 
 
 
-async function getNoteById(noteId: string) {
+async function getNoteById(noteId: string) : Promise<Note | null>{
     try {
         const noteDocRef = doc(db, 'notes', noteId);
         const noteDoc = await getDoc(noteDocRef);
 
         if (noteDoc.exists()) {
-            return { id: noteDoc.id, ...noteDoc.data() };
+            return { id: noteDoc.id, ...noteDoc.data() } as Note;
         } else {
             console.error("No such note exists!");
             return null;
@@ -93,4 +112,4 @@ async function updateNoteById(noteId: string, updatedNote: Partial<Note>) {
 
 
 
-export { createNote, getAllNotes, getNoteById, updateNoteById, getNotesByIds};
+export { createNote, getAllNotes, getNoteById, updateNoteById, getNotesByIds, updateNoteBundleIdInBatches};
