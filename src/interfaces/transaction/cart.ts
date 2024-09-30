@@ -11,7 +11,6 @@ export interface Bundle {
 export interface CartItem {
     type: string; 
     item: Note | Bundle;
-    quantity: number;            
 }
 
 export interface Cart {

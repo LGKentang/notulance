@@ -1,5 +1,5 @@
 
-import { addItemToCart } from "@/api/cart-api";
+import { addItemToCart, checkout } from "@/api/cart-api";
 import { getUserByAuthId } from "@/api/user-api";
 import { CartItem } from "@/interfaces/transaction/cart";
 import { FirebaseUser } from "@/interfaces/user/firebase-user";
@@ -24,9 +24,19 @@ async function addCartItemToCart(cartItem: CartItem) {
 }
 
 async function validateBundle(cartItem : CartItem){
-    if (cartItem.type == "bundle" && cartItem.quantity > 1){
-        throw new Error("Bundle quantity cannot be more than 1")
+    if (cartItem.type != "bundle"){
+        throw new Error("Item must be a bundle")
     }
+}
+
+
+
+async function checkoutCart(){
+    
+    await checkout()
+
+
+
 }
 
 export {addCartItemToCart}

@@ -2,6 +2,9 @@ import { collection, getDocs, doc, getDoc, setDoc, addDoc, Timestamp } from "fir
 import { db } from '../firebase/firebase';
 import { Cart, CartItem, Bundle } from "@/interfaces/transaction/cart";
 import { Note } from "@/interfaces/general/note";
+import { getAuth } from "firebase/auth";
+import { getUserByAuthId } from "./user-api";
+import { FirebaseUser } from "@/interfaces/user/firebase-user";
 
 
 async function createCart() {
@@ -66,14 +69,11 @@ function calculateTotalPrice(cart: Cart): number {
         } else {
             itemPrice = (cartItem.item as Note).price;
         }
-        totalPrice += cartItem.quantity * itemPrice;
+        totalPrice += itemPrice;
     }
 
     return totalPrice;
 }
-
-
-
 
 async function addItemToCart(userId: string, cartItem: CartItem) {
     try {
@@ -92,4 +92,86 @@ async function addItemToCart(userId: string, cartItem: CartItem) {
     }
 }
 
-export { createCart, getCartById, updateCart, addItemToCart };
+async function removeCartItem(index: number) {
+    try {
+        const auth = getAuth(); 
+        const user = auth.currentUser;
+        
+        if (!user) {
+            throw new Error("User is not authenticated");
+        }
+
+        const authUser :  FirebaseUser | null = await getUserByAuthId(user.uid);
+        if (!authUser) throw new Error("User is not found")
+        if (!authUser.id) throw new Error("User is not found")
+            
+        const cart = await getCartById(authUser.cartId);
+        if (!cart) throw new Error("Cart not found");
+        if (!cart.id) throw new Error("Cart ID does not exist");
+
+        if (index < 0 || index >= cart.items.length) {
+            throw new Error("Invalid item index");
+        }
+
+        cart.items.splice(index, 1); 
+
+        cart.totalPrice = calculateTotalPrice(cart);
+
+        await updateCart(cart.id, { 
+            items: cart.items, 
+            totalPrice: cart.totalPrice, 
+            updatedAt: Timestamp.now() 
+        });
+
+        console.log("Item removed successfully");
+
+    } catch (error) {
+        console.error("Error removing item from cart:", error);
+        throw error;
+    }
+}
+
+async function checkout(): Promise<Cart> {
+    try {
+        const auth = getAuth(); 
+        const user = auth.currentUser;
+        
+        if (!user) {
+            throw new Error("User is not authenticated");
+        }
+
+        const authUser: FirebaseUser | null = await getUserByAuthId(user.uid);
+        if (!authUser) throw new Error("User not found");
+        if (!authUser.id) throw new Error("User ID not found");
+
+        const cart = await getCartById(authUser.cartId);
+        if (!cart) throw new Error("Cart not found");
+        if (!cart.id) throw new Error("Cart ID does not exist");
+        if (cart.items.length === 0) {
+            throw new Error("Cannot checkout with an empty cart");
+        }
+
+
+        const snapshot = cart;
+        cart.items = [];
+        cart.totalPrice = 0;
+
+        await updateCart(cart.id, { 
+            items: cart.items, 
+            totalPrice: cart.totalPrice, 
+            updatedAt: Timestamp.now()
+        });
+
+        console.log("Cart checked out successfully");
+
+        return snapshot;
+
+    } catch (error) {
+        console.error("Error during checkout: ", error);
+        throw error;
+    }
+}
+
+
+
+export { createCart, getCartById, updateCart, addItemToCart, removeCartItem , checkout};
