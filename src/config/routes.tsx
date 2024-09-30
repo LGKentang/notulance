@@ -6,6 +6,8 @@ import Register from "@/pages/register";
 import { createBrowserRouter } from "react-router-dom";
 import UploadNoteTest from "@/pages/test/upload_note_test";
 import Search from "@/pages/search";
+import NoteDetails from "@/pages/note-details";
+import Sell from "@/pages/sell";
 
 const router = createBrowserRouter([
     {
@@ -24,9 +26,19 @@ const router = createBrowserRouter([
         errorElement: <Error />,
     },
     {
-        path: '/search',
+        path: '/note/search',
         element: <Search />,
         errorElement: <Error />,
+    },
+    {
+        path: '/note/:noteId',
+        element: <NoteDetails />,
+        errorElement: <Error />
+    },
+    {
+        path: '/note/sell',
+        element: <Sell />,
+        errorElement: <Error />
     },
 
 
