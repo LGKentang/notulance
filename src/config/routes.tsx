@@ -8,6 +8,8 @@ import UploadNoteTest from "@/pages/test/upload_note_test";
 import Search from "@/pages/search";
 import NoteDetails from "@/pages/note-details";
 import Sell from "@/pages/sell";
+import ReviewPage from "@/pages/reviewPage";
+import ReviewPageDetail from "@/pages/reviewPageDetail";
 
 const router = createBrowserRouter([
     {
@@ -40,7 +42,16 @@ const router = createBrowserRouter([
         element: <Sell />,
         errorElement: <Error />
     },
-
+    {
+        path: '/reviewPage',
+        element: <ReviewPage />,
+        errorElement: <Error />,
+    },
+    {
+        path: '/reviewPageDetail/:reviewId',
+        element: <ReviewPageDetail />,
+        errorElement: <Error />,
+    },
 
 
 
