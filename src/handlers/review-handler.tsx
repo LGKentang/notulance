@@ -1,3 +1,4 @@
+import { fetchBlobFromUrl, uploadPdfToStorage, uploadPdfToTemporaryStorage } from "@/api/file-api";
 import { createNote, getNoteById } from "@/api/note-api";
 import { db } from "@/firebase/firebase";
 import { ReviewStatus, ReviewResult } from "@/interfaces/enum/review_enum";
@@ -5,10 +6,13 @@ import { Note } from "@/interfaces/general/note";
 import { Review } from "@/interfaces/transaction/review";
 import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
 
-async function startReviewNote(sellerId: string, note : Note) {
+async function startReviewNote(sellerId: string, note : Note, pdf : Blob) {
     if (!note) {
         throw new Error("Note not found");
     }
+    const imgUrl = await uploadPdfToTemporaryStorage(pdf)
+
+    note.fileId = imgUrl
 
     const review: Review = {
         sellerId,
@@ -16,6 +20,7 @@ async function startReviewNote(sellerId: string, note : Note) {
         reviewStatus: ReviewStatus.Reviewing,
         reviewResult: ReviewResult.Pending,
     };
+
 
     try {
         const docRef = await addDoc(collection(db, 'reviews'), review);
@@ -27,8 +32,6 @@ async function startReviewNote(sellerId: string, note : Note) {
         throw error;
     }
 
-
-    return review;
 }
 
 async function updateNoteReviewResult(reviewId: string, reviewResult: ReviewResult, rejectReason?: string) {
@@ -57,7 +60,10 @@ async function updateNoteReviewResult(reviewId: string, reviewResult: ReviewResu
                 updateData.rejectReason = rejectReason;
             }
             if (reviewResult === ReviewResult.Accepted && review && review.notes) {
-                await createNote(review.notes);
+                const newNoteId = await createNote(review.notes);
+
+                const blob = await fetchBlobFromUrl(review.notes.fileId)
+                await uploadPdfToStorage(newNoteId,blob);
             }
             
             await updateDoc(reviewRef, updateData);

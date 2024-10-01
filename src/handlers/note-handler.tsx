@@ -1,7 +1,7 @@
 import { Timestamp } from "firebase/firestore";
 import { Note } from "@/interfaces/general/note";
 import { uploadPdfToStorage } from "@/api/file-api";
-import { createNote } from "@/api/note-api";
+import { createNote, updateNoteById } from "@/api/note-api";
 
 interface UploadNoteResult {
     success: boolean;
@@ -16,7 +16,9 @@ async function uploadNotes(note: Note, pdf: Blob): Promise<UploadNoteResult> {
 
         const uploadedNoteId = await createNote(note);
 
-        await uploadPdfToStorage(uploadedNoteId, pdf);
+        const pdfUrl = await uploadPdfToStorage(uploadedNoteId, pdf);
+
+        await updateNoteById(uploadedNoteId, { fileId : pdfUrl });
 
         return { success: true, message: "Note uploaded successfully", uploadedNoteId };
         

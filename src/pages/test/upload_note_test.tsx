@@ -4,6 +4,8 @@ import { Note } from "@/interfaces/general/note";
 import { createNote } from "@/api/note-api";
 import { uploadPdfToStorage } from "@/api/file-api"; 
 import { uploadNotes } from "@/handlers/note-handler";
+import { startReviewNote } from "@/handlers/review-handler";
+import { getCurrentUserId } from "@/api/user-api";
 
 const UploadNoteTest = () => {
   const [pdf, setPdf] = useState<Blob | null>(null); 
@@ -40,7 +42,8 @@ const UploadNoteTest = () => {
     };
 
     try {
-      const uploadedNoteId = await uploadNotes(note, pdf);
+      const id = await getCurrentUserId();
+      const uploadedNoteId = await startReviewNote(id, note, pdf);
       console.log("Note and PDF uploaded successfully");
     } catch (error) {
       console.error("Error uploading note or PDF:", error);
