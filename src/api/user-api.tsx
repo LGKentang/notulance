@@ -90,5 +90,4 @@ async function getCurrentUserId(): Promise<string> {
     return authUser.id;
 }
 
-
 export { createUser, getAllUsers, getUserById , getUserByAuthId, getCurrentUserId };
