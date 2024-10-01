@@ -10,6 +10,7 @@ import NoteDetails from "@/pages/note-details";
 import Sell from "@/pages/sell";
 import ReviewPage from "@/pages/reviewPage";
 import ReviewPageDetail from "@/pages/reviewPageDetail";
+import PopoverDemo from "@/pages/test";
 
 const router = createBrowserRouter([
     {
@@ -66,8 +67,6 @@ const router = createBrowserRouter([
         element: <UploadNoteTest></UploadNoteTest>,
         errorElement: <Error/>
     }
-
-
 ])
 
 export default router;
