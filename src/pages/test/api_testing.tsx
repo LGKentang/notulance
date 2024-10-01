@@ -120,6 +120,8 @@ const ApiTesting = () => {
     // }
 
     // async function reviewNote() {
+
+
     //     const note = {
     //         title: "Introduction to Artificial Neural Network",
     //         description: "A comprehensive guide to deep learning concepts and techniques.",
@@ -140,23 +142,28 @@ const ApiTesting = () => {
     //     await startReviewNote("510BlmJ335N0lps4Vj7m", note);
     // }
 
-    // async function acceptNoteReview(){
-    //     const reviewId : string = "vGcmchmrgF6Ic48cnakL"
-    //     await updateNoteReviewResult(reviewId,ReviewResult.Accepted);
-    // }
+    async function acceptNoteReview() {
+        const reviewId: string = "48BSJeH5UfDVFWT1iMPj"
+        await updateNoteReviewResult(reviewId, ReviewResult.Accepted);
+    }
 
     async function checkoutAndCreateTransaction() {
         await checkoutCart()
     }
 
-    async function purchaseTransactionTest(){
-        await purchaseTransaction("mOhegvWjT6B9059Y6JGV",PaymentMethod.Gopay)
+    async function purchaseTransactionTest() {
+        await purchaseTransaction("mOhegvWjT6B9059Y6JGV", PaymentMethod.Gopay)
     }
 
     return <>
 
         {/* <input type="file" />
         <br /><br /> */}
+
+        <button onClick={acceptNoteReview} className="text-white mb-5">
+            Accept Note
+        </button>
+
 
         <button onClick={addBundleToCart} className="text-white mb-5">
             Add Bundle

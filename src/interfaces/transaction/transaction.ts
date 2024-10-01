@@ -13,10 +13,16 @@ export interface Transaction{
     createdAt : Timestamp;
     updatedAt : Timestamp;
     history : History[] | null;
-    refundDeadline : Timestamp
+    refundDeadline : Timestamp;
+    product? : Product;
 }
 
 export interface History{
     status : string;
     timestamp  : Timestamp;
+}
+
+export interface Product {
+    downloadUrl : string;
+
 }

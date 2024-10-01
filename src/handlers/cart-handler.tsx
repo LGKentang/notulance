@@ -50,6 +50,7 @@ async function checkoutCart(){
         price : cart.totalPrice,
         refundDeadline : addDaysToTimestamp(7),
         updatedAt : Timestamp.now(),
+
     } 
 
     await createTransaction(transaction)
