@@ -20,26 +20,30 @@ import {
 } from "@/components/ui/popover"
 
 const universities = [
-    {
-        value: "binus",
-        label: "BINUS University",
-    },
-    {
-        value: "uph",
-        label: "UPH College",
-    },
-    {
-        value: "nuxt.js",
-        label: "Nuxt.js",
-    },
-    {
-        value: "remix",
-        label: "Remix",
-    },
-    {
-        value: "astro",
-        label: "Astro",
-    },
+  {
+    value: "Bina Nusantara University",
+    label: "Bina Nusantara University",
+  },
+  {
+    value: "UPH College",
+    label: "UPH College",
+  },
+  {
+    value: "Tarumanagara University",
+    label: "Tarumanagara University",
+  },
+  {
+    value: "University of Indonesia",
+    label: "University of Indonesia",
+  },
+  {
+    value: "Universitas Gadjah Mada",
+    label: "Universitas Gadjah Mada",
+  },
+  {
+    value: "Universitas Bunda Mulia",
+    label: "Universitas Bunda Mulia",
+  },
 ]
 
 export function UniversityCombo({ onUniversitySelect }: { onUniversitySelect: (university: string) => void }) {

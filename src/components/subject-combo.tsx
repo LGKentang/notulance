@@ -21,16 +21,36 @@ import {
 
 const subjects = [
   {
-    value: "UBM",
-    label: "Nuxt.js",
+    value: "Chemistry",
+    label: "Chemistry",
   },
   {
-    value: "remix",
-    label: "Remix",
+    value: "Physics",
+    label: "Physics",
   },
   {
-    value: "astro",
-    label: "Astro",
+    value: "Mathematics",
+    label: "Mathematics",
+  },
+  {
+    value: "Biology",
+    label: "Biology",
+  },
+  {
+    value: "History",
+    label: "History",
+  },
+  {
+    value: "Linear Algebra",
+    label: "Linear Algebra",
+  },
+  {
+    value: "Discrete Math",
+    label: "Discrete Math",
+  },
+  {
+    value: "Calculus",
+    label: "Calculus",
   },
 ]
 

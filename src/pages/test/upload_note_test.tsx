@@ -7,14 +7,14 @@ import { uploadNotes } from "@/handlers/note-handler";
 
 const UploadNoteTest = () => {
   const [pdf, setPdf] = useState<Blob | null>(null); 
-  function savePdf(event: React.ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0];
-    if (file && file.type === "application/pdf") {
-      setPdf(file);
-    } else {
-      console.error("Please select a valid PDF file.");
+    function savePdf(event: React.ChangeEvent<HTMLInputElement>) {
+      const file = event.target.files?.[0];
+      if (file && file.type === "application/pdf") {
+        setPdf(file);
+      } else {
+        console.error("Please select a valid PDF file.");
+      }
     }
-  }
 
   async function uploadNoteWithPdf() {
     if (!pdf) {
