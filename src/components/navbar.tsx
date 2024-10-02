@@ -89,8 +89,8 @@ const NavBar = () => {
                       <span>Total price: Rp37,500</span>
                     </div>
                     <div className="flex justify-between">
-                      <Button className="w-24 bg-red-400 rounded-3xl">Clear Cart</Button>
-                      <Button className="w-24 bg-green-400 rounded-3xl">Checkout!</Button>
+                      <Button variant="decline">Clear Cart</Button>
+                      <Button variant="agree">Checkout!</Button>
                     </div>
                   </div>
                 </PopoverContent>
@@ -151,7 +151,7 @@ const NavBar = () => {
                   </DropdownMenuContent>
                 </DropdownMenu>
               ) : (
-                <a href="/login"><Button variant="default">Sign In</Button></a>
+                <a href="/login"><Button variant="decline" className="rounded-md">Sign In</Button></a>
               )}
           </div>
       </div>

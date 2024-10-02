@@ -9,6 +9,8 @@ import { useEffect, useState } from "react"
 
 export default function ReviewPage(){
     const [reviews, setReviews] = useState<any[] | null>()
+    const [university, setUniversity] = useState<string>("")
+    const [subject, setSubject] = useState<string>("")
 
     const loadReviews = async () => {
         const result = await getAllReviews(ReviewResult.Accepted)
@@ -19,17 +21,17 @@ export default function ReviewPage(){
     }, [])
 
     return(
-        <div className="w-screen h-screen">
+        <div className="w-screen h-screen overflow-y-scroll">
             <NavBar/>
             <div className="p-16">
                 <h1 className="text-3xl">Review Page:</h1>
                 <br/>
                 <span>filter by:</span>
                 <UniversityCombo
-                    onUniversitySelect={()=>{}}
+                    onUniversitySelect={setUniversity}
                 />
                 <SubjectCombo 
-                    onSubjectSelect={()=>{}} 
+                    onSubjectSelect={setSubject} 
                 />
                 <button className="bg-gray-200">result: pending</button>
                 <button className="bg-red-200">result: accepted</button>
