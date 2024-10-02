@@ -1,12 +1,28 @@
 import { storage } from "@/firebase/firebase";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { PDFDocument } from "pdf-lib";
 import { v4 as uuidv4 } from 'uuid';
 
 async function uploadPdfToStorage(noteId: string, pdf: Blob): Promise<string> {
     try {
-        const storage = getStorage();
         const pdfRef = ref(storage, `notes/${noteId}/content.pdf`);
         await uploadBytes(pdfRef, pdf);
+        const downloadURL = await getDownloadURL(pdfRef);
+        console.log("PDF uploaded successfully. Download URL:", downloadURL);
+        return downloadURL;
+
+    } catch (error) {
+        console.error("Error uploading PDF to Firestore Storage:", error);
+        throw new Error("Failed to upload PDF");
+    }
+}
+
+async function uploadWatermarkedPdfToStorage(noteId : string, pdf : Blob) : Promise<string> {
+    try { 
+        const watermarkedBlob = await addWatermarkToPdf(pdf, '/notulance-wm-b.png')
+
+        const pdfRef = ref(storage, `notes/${noteId}/watermarked-content.pdf`);
+        await uploadBytes(pdfRef, watermarkedBlob);
         const downloadURL = await getDownloadURL(pdfRef);
         console.log("PDF uploaded successfully. Download URL:", downloadURL);
         return downloadURL;
@@ -117,9 +133,102 @@ function convertImageToPng(image: Blob): Promise<Blob> {
     });
 }
 
+const addWatermarkToPdf = async (pdfBlob: Blob, imageUrl: string) => {
+    const pdfBytes = await pdfBlob.arrayBuffer();
+
+    const pdfDoc = await PDFDocument.load(pdfBytes);
+
+    const imageBytes = await fetch(imageUrl).then(res => res.arrayBuffer());
+    const image = await pdfDoc.embedPng(imageBytes);
+
+    const pages = pdfDoc.getPages();
+
+    pages.forEach((page) => {
+        const { width, height } = page.getSize();
+
+        const imgDims = image.scale(0.5);
+        const imgWidth = imgDims.width;
+        const imgHeight = imgDims.height;
+
+        const cols = Math.floor(width / imgWidth);
+        const rows = Math.floor(height / imgHeight);
+
+        const xPadding = (width - cols * imgWidth) / 2;
+        const yPadding = (height - rows * imgHeight) / 2;
+
+        for (let row = 0; row < rows; row++) {
+            for (let col = 0; col < cols; col++) {
+                const x = xPadding + col * imgWidth;
+                const y = height - yPadding - (row + 1) * imgHeight;
+
+                page.drawImage(image, {
+                    x,
+                    y,
+                    width: imgWidth,
+                    height: imgHeight,
+                    opacity: 0.06, 
+                });
+            }
+        }
+    });
+
+    const pdfWithWatermarkBytes = await pdfDoc.save();
+
+    return new Blob([pdfWithWatermarkBytes], { type: 'application/pdf' });
+};
+
+
+// const addWatermarkToPdf = async (firebaseUrl: string, imageUrl: string) => {
+//     const pdfResponse = await fetch(firebaseUrl);
+//     if (!pdfResponse.ok) {
+//         throw new Error('Failed to fetch PDF from the provided URL');
+//     }
+
+//     const pdfBlob = await pdfResponse.blob();
+//     const pdfBytes = await pdfBlob.arrayBuffer();  
+
+//     const pdfDoc = await PDFDocument.load(pdfBytes);
+
+//     const imageBytes = await fetch(imageUrl).then(res => res.arrayBuffer());
+//     const image = await pdfDoc.embedPng(imageBytes);
+
+//     const pages = pdfDoc.getPages();
+
+//     pages.forEach((page) => {
+//         const { width, height } = page.getSize();
+
+//         const imgDims = image.scale(0.5); 
+//         const imgWidth = imgDims.width;
+//         const imgHeight = imgDims.height;
+
+//         const cols = Math.floor(width / imgWidth); 
+//         const rows = Math.floor(height / imgHeight); 
+
+//         const xPadding = (width - cols * imgWidth) / 2;  
+//         const yPadding = (height - rows * imgHeight) / 2; 
+
+//         for (let row = 0; row < rows; row++) {
+//             for (let col = 0; col < cols; col++) {
+//                 const x = xPadding + col * imgWidth;
+//                 const y = height - yPadding - (row + 1) * imgHeight; 
+
+//                 page.drawImage(image, {
+//                     x,
+//                     y,
+//                     width: imgWidth,
+//                     height: imgHeight,
+//                     opacity: 0.06, 
+//                 });
+//             }
+//         }
+//     });
+
+//     const pdfWithWatermarkBytes = await pdfDoc.save();
+//     return new Blob([pdfWithWatermarkBytes], { type: 'application/pdf' });
+// };
 
 
 
 
 
-export { uploadPdfToStorage, uploadThumbnailToStorage, copyPdf , fetchBlobFromUrl,  uploadPdfToTemporaryStorage};
+export { uploadPdfToStorage, uploadThumbnailToStorage, copyPdf , fetchBlobFromUrl,  uploadPdfToTemporaryStorage, addWatermarkToPdf , uploadWatermarkedPdfToStorage };

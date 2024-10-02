@@ -1,5 +1,5 @@
-import { fetchBlobFromUrl, uploadPdfToStorage, uploadPdfToTemporaryStorage } from "@/api/file-api";
-import { createNote, getNoteById } from "@/api/note-api";
+import { fetchBlobFromUrl, uploadPdfToStorage, uploadPdfToTemporaryStorage, uploadWatermarkedPdfToStorage } from "@/api/file-api";
+import { createNote, getNoteById, updateNoteById } from "@/api/note-api";
 import { db } from "@/firebase/firebase";
 import { ReviewStatus, ReviewResult } from "@/interfaces/enum/review_enum";
 import { Note } from "@/interfaces/general/note";
@@ -63,7 +63,10 @@ async function updateNoteReviewResult(reviewId: string, reviewResult: ReviewResu
                 const newNoteId = await createNote(review.notes);
 
                 const blob = await fetchBlobFromUrl(review.notes.fileId)
-                await uploadPdfToStorage(newNoteId,blob);
+                const newFileUrl = await uploadPdfToStorage(newNoteId,blob);
+                const newWatermarkedFileUrl = await uploadWatermarkedPdfToStorage(newNoteId,blob)
+
+                await updateNoteById(newNoteId, {fileId : newFileUrl, watermarkId : newWatermarkedFileUrl})
             }
             
             await updateDoc(reviewRef, updateData);

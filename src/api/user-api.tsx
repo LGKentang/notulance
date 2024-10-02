@@ -1,4 +1,4 @@
-import { collection, getDocs, doc, getDoc, setDoc, addDoc, query, where } from "firebase/firestore";
+import { collection, getDocs, doc, getDoc, setDoc, addDoc, query, where, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from '../firebase/firebase';
 import { FirebaseUser } from "@/interfaces/user/firebase-user";
 import { getAuth } from "firebase/auth";
@@ -90,4 +90,25 @@ async function getCurrentUserId(): Promise<string> {
     return authUser.id;
 }
 
-export { createUser, getAllUsers, getUserById , getUserByAuthId, getCurrentUserId };
+async function addUserOwnedNotes(userId: string, noteIds: string[]): Promise<void> {
+    try {
+        const userDocRef = doc(db, 'users', userId);
+
+        const userDoc = await getDoc(userDocRef);
+
+        if (!userDoc.exists()) {
+            throw new Error("User does not exist");
+        }
+
+        await updateDoc(userDocRef, {
+            ownedNotes: arrayUnion(...noteIds)
+        });
+
+        console.log("Owned notes updated successfully for user:", userId);
+    } catch (error) {
+        console.error("Error updating owned notes:", error);
+        throw error;
+    }
+}
+
+export { createUser, getAllUsers, getUserById , getUserByAuthId, getCurrentUserId , addUserOwnedNotes};
