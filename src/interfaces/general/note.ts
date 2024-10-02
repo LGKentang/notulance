@@ -11,6 +11,7 @@ export interface Note {
     university?: string | null;
     grade?: number;
     fileId: string;
+    watermarkId? : string;
     score?: number;
     bundleId?: string | null; 
     thumbnailUrl: string | null;

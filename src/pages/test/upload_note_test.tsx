@@ -29,7 +29,7 @@ const UploadNoteTest = () => {
       description: "A comprehensive guide to deep learning concepts and techniques.",
       writerId: "user-98765",
       price: 29.99,
-      subject: "Artificial Intelligence",
+      subject: "Web Programming",
       releaseDate: Timestamp.fromDate(new Date("2024-09-26T11:06:39Z")),
       university: "Harvard University",
       grade: 4,

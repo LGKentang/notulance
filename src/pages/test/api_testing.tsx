@@ -100,7 +100,7 @@ const ApiTesting = () => {
     }
 
     async function addNoteToCart() {
-        const note: Note | null = await getNoteById("Svm4isPuFE9ZHukLKGHn")
+        const note: Note | null = await getNoteById("zeENI3czGke0UjwUZ5ba")
 
         if (!note) {
             throw new Error("Note does not exist")
@@ -143,7 +143,7 @@ const ApiTesting = () => {
     // }
 
     async function acceptNoteReview() {
-        const reviewId: string = "48BSJeH5UfDVFWT1iMPj"
+        const reviewId: string = "Sp4fO2EAO5sWjA7JdCZ3"
         await updateNoteReviewResult(reviewId, ReviewResult.Accepted);
     }
 

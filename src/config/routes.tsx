@@ -11,6 +11,7 @@ import Sell from "@/pages/sell";
 import ReviewPage from "@/pages/reviewPage";
 import ReviewPageDetail from "@/pages/reviewPageDetail";
 import PopoverDemo from "@/pages/test";
+import WatermarkTesting from "@/pages/test/watermark_testing";
 
 const router = createBrowserRouter([
     {
@@ -66,6 +67,12 @@ const router = createBrowserRouter([
         path: '/upload_note_test',
         element: <UploadNoteTest></UploadNoteTest>,
         errorElement: <Error/>
+    }
+    ,
+    {
+        path: '/watermark_testing',
+        element: <WatermarkTesting></WatermarkTesting>,
+        errorElement: <Error/>  
     }
 ])
 
