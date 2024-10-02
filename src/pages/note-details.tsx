@@ -33,10 +33,10 @@ const NoteDetails = () => {
                     <div className='text-3xl mb-3'>
                         {note.title}
                     </div>
-                    <div className='text-xl'>
+                    <div className='text-xl mb-2'>
                         {note.description}
                     </div>
-                    <div className='flex space-x-5 text-xl'>
+                    <div className='flex w-1/3 text-xl justify-between'>
                         <div>
                             {`Grade : ${note.grade}`}
                         </div>
@@ -47,7 +47,7 @@ const NoteDetails = () => {
                     <div className='text-xl mb-2'>
                             {`Score : ${note.score}`}
                     </div>
-                    <div className='text-3xl'>
+                    <div className='text-3xl underline'>
                             {`Rp. ${note.price}`}
                     </div>
                     <div className='w-full h-[700px] items-center flex flex-col text-2xl mt-3'>
@@ -72,7 +72,6 @@ const NoteDetails = () => {
         </div>
     );
 };
-
 
 
 export default NoteDetails;
