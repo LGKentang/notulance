@@ -18,23 +18,31 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { Avatar } from "./ui/avatar";
 import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
 import CartChild from "./cart-child";
+import { FirebaseUser } from "@/interfaces/user/firebase-user";
+import { getCurrentUserId, getUserById } from "@/api/user-api";
 
 const NavBar = () => {
   const [authenticated, setAuthenticated] = useState<boolean>(false);
+  const [user, setUser] = useState<FirebaseUser | null>(null);
   useEffect(() => {
     const auth = getAuth();
+
+    const getUser = async() => {
+      const userId = await getCurrentUserId();
+      const user = await getUserById(userId);
+      setUser(user)
+    }
     
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setAuthenticated(true);
+        getUser()
       } else {
         setAuthenticated(false);
       }
@@ -48,16 +56,16 @@ const NavBar = () => {
           <div className="flex items-center">
               <a 
                 href="/"
-                className="text-lg flex items-center text-black hover:text-slate-900/80 duration-150"
+                className="text-2xl flex items-center text-black hover:text-slate-900/80 duration-150 space-x-1"
               >
                 <img src="/notulance.png" alt="" className="w-10 h-10" />
-                Notulance
+                <div>Notulance</div>
               </a>
 
           </div>
           <div id="right" className="flex items-center space-x-16">
-              <a href="/note/search"><Button variant="link">Search</Button></a>
-              <a href="/note/sell"><Button variant="link">Sell</Button></a>
+              <a href="/note/search"><Button variant="link" className="text-xl">Search</Button></a>
+              <a href="/note/sell"><Button variant="link" className="text-xl">Sell</Button></a>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button variant="outline" className="w-14 rounded-3xl">
@@ -125,8 +133,8 @@ const NavBar = () => {
                       </Avatar>
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-56">
-                    <DropdownMenuLabel>Name</DropdownMenuLabel>
+                  <DropdownMenuContent className="min-w-32 max-w-48">
+                    <DropdownMenuLabel>{user?.name}</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuGroup>
                       <DropdownMenuItem>
