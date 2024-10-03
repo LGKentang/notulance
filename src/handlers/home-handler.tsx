@@ -10,7 +10,7 @@ const fuseOptions = {
 
 async function searchNotes(query: string, useFilter: boolean, filter?: Filter): Promise<string[] | null> {
     try { 
-        const notes: Note[] | SimpleNote[] = await getAllNotes(useFilter);
+        const notes: Note[] | SimpleNote[] = await getAllNotes(!useFilter);
 
         let filteredNotes: (Note | SimpleNote)[] = notes;
 

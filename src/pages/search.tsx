@@ -1,4 +1,4 @@
-import { getNotesByIds } from "@/api/note-api";
+import { getNoteById, getNotesByIds } from "@/api/note-api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { NavBar } from "@/components/navbar";
@@ -31,7 +31,13 @@ const Search = () => {
         const tempIds = await searchNotes(search, isFilterUsed, filter);
 
         if(tempIds != null){
-            const tempNotes = await getNotesByIds(tempIds)
+            console.log(tempIds)
+            
+            const tempNotes = [];
+            for (const element of tempIds) {
+                const note = await getNoteById(element);
+                tempNotes.push(note);
+            }
             setNotes(tempNotes)
             console.log(tempNotes)
         }
