@@ -7,7 +7,7 @@ async function createTransaction(transaction: Transaction) {
   try {
     const transactionCollection = collection(db, 'transactions');
     const transactionDocRef = await addDoc(transactionCollection, transaction);
-
+    
     console.log("Transaction created successfully with ID:", transactionDocRef.id);
     return transactionDocRef.id;
   }
