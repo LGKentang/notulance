@@ -134,13 +134,14 @@ const Search = () => {
                     {notes.map((note, index) => {
                         return(
                             <a href={`/note/${note.id}`} key={index}>
-                                <Card>
+                                <Card className="border-black border-2 drop-shadow-2xl">
                                     <CardHeader className="flex p-0 w-full max-h-48 items-center overflow-hidden">
                                         <img src={note.thumbnailUrl} alt="" />
                                     </CardHeader>
                                     <Separator />
                                     <CardContent className="p-2">
-                                        {note.title}
+                                        <h1 className="text-xl">{note.title}</h1>
+                                        <div className="text-red-500">Rp {note.price}</div>
                                     </CardContent>
                                     <CardFooter className="flex justify-between p-3 text-sm">
                                         <span>{note.university}</span>
