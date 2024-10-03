@@ -32,6 +32,7 @@ import { checkoutCart } from "@/handlers/cart-handler";
 const NavBar = () => {
   const [authenticated, setAuthenticated] = useState<boolean>(false);
   const [cart, setCart] = useState<any | null>([])
+  const [userGlobal, setUser] = useState<FirebaseUser | null>(null)
 
   useEffect(() => {
     const auth = getAuth();
@@ -41,9 +42,9 @@ const NavBar = () => {
         setAuthenticated(true);
 
         const userId = user.uid;
-        let userObject = await getUserByAuthId(userId) as FirebaseUser | null
-        if (userObject == null) throw new Error("User is not found");
-        const cartId = userObject.cartId
+        setUser(await getUserByAuthId(userId) as FirebaseUser | null);
+        if (!user) throw new Error("User is not found");
+        const cartId = userGlobal?.cartId as string
         const theCart = await getCartById(cartId)
 
         if(theCart != null){
@@ -74,8 +75,8 @@ const NavBar = () => {
 
           </div>
           <div id="right" className="flex items-center space-x-16">
-              <a href="/note/search"><Button variant="link">Search</Button></a>
-              <a href="/note/sell"><Button variant="link">Sell</Button></a>
+              <a href="/note/search"><Button variant="link" className="text-xl">Search</Button></a>
+              <a href="/note/sell"><Button variant="link" className="text-xl">Sell</Button></a>
 
               {authenticated ? (
                 <>
@@ -117,7 +118,7 @@ const NavBar = () => {
                         </Avatar>
                       </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-56">
+                    <DropdownMenuContent className="min-w-36 max-w-56">
                       <DropdownMenuLabel>Name</DropdownMenuLabel>
                       <DropdownMenuSeparator />
                       <DropdownMenuGroup>
