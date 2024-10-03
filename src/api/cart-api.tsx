@@ -81,6 +81,7 @@ async function addItemToCart(userId: string, cartItem: CartItem) {
         if (!cart) throw new Error("Cart not found");
         if (!cart.id) throw new Error("Cart ID not exist")
 
+        validateNoteIsNotInBundle(cart);
 
         cart.items.push(cartItem);
         cart.totalPrice = calculateTotalPrice(cart)
@@ -91,6 +92,33 @@ async function addItemToCart(userId: string, cartItem: CartItem) {
         throw error;
     }
 }
+
+function validateNoteIsNotInBundle(cart: Cart): void {
+    const cartItems: CartItem[] = cart.items as CartItem[];
+
+    let noteIds: string[] = [];
+
+    cartItems.forEach((cartItem: CartItem) => {
+        if (cartItem.type === "note") {
+            const note = cartItem.item as Note;
+            if (note.id) noteIds.push(note.id);
+        }
+    });
+
+    cartItems.forEach((cartItem: CartItem) => {
+        if (cartItem.type === "bundle") {
+            const bundle = cartItem.item as Bundle;
+            if (bundle.noteIds) {
+                const conflictingNoteIds = bundle.noteIds.filter(noteId => noteIds.includes(noteId));
+                
+                if (conflictingNoteIds.length > 0) {
+                    throw new Error(`Note(s) with ID(s) ${conflictingNoteIds.join(", ")} are already included in a bundle.`);
+                }
+            }
+        }
+    });
+}
+
 
 async function removeCartItem(index: number) {
     try {

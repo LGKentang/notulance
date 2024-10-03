@@ -20,6 +20,7 @@ async function addCartItemToCart(cartItem: CartItem) {
 
     const authUser :  FirebaseUser | null = await getUserByAuthId(user.uid);
 
+
     if (!authUser) throw new Error("User is not found")
     if (!authUser.id) throw new Error("User is not found")
     console.log(authUser.id)
@@ -54,6 +55,7 @@ async function checkoutCart(){
     } 
 
     await createTransaction(transaction)
+    
 }
 
 function addDaysToTimestamp(days: number): Timestamp {
