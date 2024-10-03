@@ -45,7 +45,7 @@ const NavBar = () => {
         setUser(await getUserByAuthId(userId) as FirebaseUser | null);
         if (!user) throw new Error("User is not found");
         const cartId = userGlobal?.cartId as string
-        const theCart = await getCartById(cartId)
+        const theCart = await getCartById(cartId) 
 
         if(theCart != null){
           const cartItems = theCart.items
@@ -119,7 +119,7 @@ const NavBar = () => {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="min-w-36 max-w-56">
-                      <DropdownMenuLabel>Name</DropdownMenuLabel>
+                      <DropdownMenuLabel>{userGlobal?.name}</DropdownMenuLabel>
                       <DropdownMenuSeparator />
                       <DropdownMenuGroup>
                         <DropdownMenuItem>

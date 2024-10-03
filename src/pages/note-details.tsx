@@ -8,37 +8,68 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { CartItem } from '@/interfaces/transaction/cart';
 import { Note } from '@/interfaces/general/note';
 import { addCartItemToCart } from '@/handlers/cart-handler';
+import { PDFDocument } from 'pdf-lib';
 
 
 const NoteDetails = () => {
-    const [userId, setUserId] = useState<any | null>(null);
-
     const { noteId } = useParams();
+
+    const [userId, setUserId] = useState<any | null>(null);
     const [note, setNote] = useState<any | null>(null);
+    const [preview, setPreview] = useState<string | null>(null);
+
+
+    const extractFirstPage = async () => {
+        const pdfUrl = note.fileId
+
+        const response = await fetch(pdfUrl);
+        const pdfBuffer = await response.arrayBuffer();
+
+        const pdfDoc = await PDFDocument.load(pdfBuffer);
+        const newPdfDoc = await PDFDocument.create();
+        const [firstPage] = await newPdfDoc.copyPages(pdfDoc, [0]);
+        newPdfDoc.addPage(firstPage);
+    
+        const newPdfBytes = await newPdfDoc.save();
+
+        const pdfBlob = new Blob([newPdfBytes], { type: 'application/pdf' });
+        const newPdfUrl = URL.createObjectURL(pdfBlob);
+        setPreview(newPdfUrl)
+        console.log(preview)
+    };
 
     useEffect(() => {
         const fetchNote = async () => {
             try {
-                if(noteId != null){
+                if (noteId != null) {
                     const temp = await getNoteById(noteId);
                     setNote(temp);
-                    console.log(temp)
+                    console.log(temp);
                 }
             } catch (error) {
                 console.error("Error fetching note:", error);
             }
         };
+    
         fetchNote();
-
+    
         const auth = getAuth();
         const unsubscribe = onAuthStateChanged(auth, (user) => {
-          if (user) {
-            setUserId(user.uid);
-          } else {
-            setUserId(null);
-          }
+            if (user) {
+                setUserId(user.uid);
+            } else {
+                setUserId(null);
+            }
         });
+    
+        return () => unsubscribe();
     }, [noteId]);
+    
+    useEffect(() => {
+        if (note && note.fileId) {
+            extractFirstPage();
+        }
+    }, [note]); 
 
     async function handleAddToCart(){
         const uid = userId
@@ -68,7 +99,7 @@ const NoteDetails = () => {
         await addCartItemToCart(cartItem);
         window.location.reload()
     }
-    
+
 
     return (
         <div className="w-screen h-screen flex flex-col font-itim overflow-y-scroll">
@@ -92,20 +123,30 @@ const NoteDetails = () => {
                     <div className='text-xl mb-2'>
                             {`Score : ${note.score}`}
                     </div>
-                    <div className='text-3xl underline'>
+                    <div className='text-3xl underline mb-2'>
                             {`Rp. ${note.price}`}
+                    </div>
+                    <div>
+                        <Button 
+                            onClick={handleAddToCart} 
+                            variant="agree"
+                            className='rounded-sm p-6 text-2xl'
+                        >
+                            Add to cart
+                        </Button>
                     </div>
                     <div className='w-full h-[700px] items-center flex flex-col text-2xl mt-3'>
                         Preview
-                        <iframe 
-                            src={`${note.fileId}#page=1&pagemode=none&scrollbar=0&zoom=40`}
-                            // src={`https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/web/viewer.html?file=${note.fileId}&zoom=page-width&pagemode=none`}
-                            className="w-full h-full border-0"
-                            style={{ overflow: 'hidden', pointerEvents: 'none' }}
-                            title="PDF Preview"
-                        >
-                            This browser does not support PDFs. Please download the PDF to view it: <a href={note.fileId}>Download PDF</a>.
-                        </iframe>
+                        {preview ? (
+                            <iframe 
+                                src={`${preview}`}
+                                className="w-full h-full border-0"
+                                style={{ overflow: 'hidden', pointerEvents: 'none' }}
+                                title="PDF Preview"
+                            >
+                                This browser does not support PDFs. Please download the PDF to view it: <a href={note.fileId}>Download PDF</a>.
+                            </iframe>
+                        ) : <></>}
                     </div>
 
                 </div>
