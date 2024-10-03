@@ -53,7 +53,7 @@ const Search = () => {
 
             {/* Notes */}
             {notes && notes.length > 0 ? (
-                <div className="grid px-44 grid-cols-3 justify-between gap-10">
+                <div className="grid px-44 grid-cols-3 justify-between gap-10 mb-4">
                     {notes.map((note, index) => {
                         return(
                             <a href={`/note/${note.id}`} key={index}>
