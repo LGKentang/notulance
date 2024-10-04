@@ -12,6 +12,7 @@ import {
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
+
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -139,7 +140,7 @@ const NavBar = () => {
                       <DropdownMenuLabel>{userGlobal?.name}</DropdownMenuLabel>
                       <DropdownMenuSeparator />
                       <DropdownMenuGroup>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => {window.location.href = '/profile'}}>
                           Profile
                         </DropdownMenuItem>
                         <DropdownMenuItem>

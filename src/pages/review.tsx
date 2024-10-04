@@ -55,7 +55,7 @@ export default function ReviewPage(){
                                     <p>Kemanggisan</p>
                                     <p>2024</p>
                                 </div>
-                                <a href={`/reviewPageDetail/${review.id}`}>
+                                <a href={`/review/${review.id}`}>
                                     <button className="bg-red-500 text-white">View Note</button>
                                 </a>
                             </CardFooter>

@@ -27,7 +27,7 @@ const Register = () => {
             }
         } catch (error) {
             console.error("Error during registration:", error);
-            clearField();  // Handle errors but do not redirect
+            clearField();
         }
     };
 
