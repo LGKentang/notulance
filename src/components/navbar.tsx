@@ -34,6 +34,23 @@ const NavBar = () => {
   const [cart, setCart] = useState<any | null>([])
   const [userGlobal, setUser] = useState<FirebaseUser | null>(null)
 
+  const handleLogout = async () => {
+    const auth = getAuth();
+  
+    // Check if a user is currently signed in
+    if (auth.currentUser) {
+      try {
+        // Sign out the user
+        await auth.signOut();
+        console.log("User has been logged out.");
+      } catch (error) {
+        console.error("Error during logout:", error);
+      }
+    } else {
+      console.log("No user is signed in.");
+    }
+  };
+
   useEffect(() => {
     const auth = getAuth();
     
@@ -130,7 +147,7 @@ const NavBar = () => {
                         </DropdownMenuItem>
                       </DropdownMenuGroup>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem className="text-red-500">
+                      <DropdownMenuItem className="text-red-500" onClick={handleLogout}>
                         Log out
                       </DropdownMenuItem>
                     </DropdownMenuContent>

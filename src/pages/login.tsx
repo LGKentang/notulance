@@ -10,10 +10,17 @@ const Login = () => {
     const [password, setPassword] = useState<string>("");
 
     const handleLogin = async() => {
-        const response = await userLogin(email, password);
+        try {
+            const response = await userLogin(email, password);
 
-        console.log(response)   
-    } 
+            if (response && response.success) {
+                window.location.href = '/'; 
+            }
+        } catch (error) {
+            console.log(error)
+            setPassword('')
+        }
+    }
 
     return (
         <div className="w-screen h-screen flex justify-center">

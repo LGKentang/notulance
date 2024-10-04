@@ -9,6 +9,7 @@ async function userLogin(email: string, password: string) {
         const response = await signInWithEmailAndPassword(auth, email, password);
 
         console.log(response.user);
+        return { success: true, message: "Login successful" };
     } catch (error: any) {
         let errorMessage = "Error while signing in.";
         if (error.code === 'auth/wrong-password') {
@@ -59,10 +60,12 @@ async function userRegister(name: string, email: string, password: string, confi
 
         const response = await createUser(user);
         console.log(response);
+        return { success: true, message: "Registration successful" };
 
     } catch (error) {
         console.error("Error creating user: ", error);
         throw error;
+        return { success: false, message: "Registration failed" };  
     }
 }
 

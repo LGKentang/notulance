@@ -10,9 +10,26 @@ const Register = () => {
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
 
-    const handleRegister = async() => {
-        await userRegister(name, email, confirmPassword, password);
+    const clearField = () => {
+        setName("")
+        setEmail("")
+        setPassword("")
+        setConfirmPassword("")
     }
+
+    const handleRegister = async () => {
+        try {
+            const response = await userRegister(name, email, confirmPassword, password);
+        
+            if (response && response.success) {
+                clearField();
+                window.location.href = '/login'; 
+            }
+        } catch (error) {
+            console.error("Error during registration:", error);
+            clearField();  // Handle errors but do not redirect
+        }
+    };
 
     return (
         <div className="w-screen h-screen flex justify-center">
