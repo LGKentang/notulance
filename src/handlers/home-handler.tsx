@@ -10,8 +10,8 @@ const fuseOptions = {
 
 async function searchNotes(query: string, useFilter: boolean, filter?: Filter): Promise<string[] | null> {
     try { 
-        const notes: Note[] | SimpleNote[] = await getAllNotes(useFilter);
-
+        const notes: Note[] | SimpleNote[] = await getAllNotes(!useFilter);
+        console.log(notes)
         let filteredNotes: (Note | SimpleNote)[] = notes;
 
         if (query) {
@@ -21,50 +21,57 @@ async function searchNotes(query: string, useFilter: boolean, filter?: Filter): 
         }
 
         if (useFilter && filter && filteredNotes.length > 0) {
+            console.log('test')
+            console.log(filteredNotes)
             filteredNotes.sort((a, b) => {
-                const noteA = a as Note;
+                const noteA = a as Note; // Assuming this is a valid type assertion
                 const noteB = b as Note;
 
-                const safeCompare = (valA: any, valB: any, order: 'asc' | 'desc') => {
-                    if (valA === undefined) return order === 'asc' ? -1 : 1; 
-                    if (valB === undefined) return order === 'asc' ? 1 : -1;  
-                    return order === 'asc' ? valA - valB : valB - valA;
+                console.log(noteA)
+        
+                const safeCompare = (valA: any, valB: any) => {
+                    if (valA === undefined) return 1; // Push undefined values to the end
+                    if (valB === undefined) return -1; // Push undefined values to the end
+                    return valA < valB ? -1 : valA > valB ? 1 : 0; // Standard comparison
                 };
-
+        
                 if (filter.grade) {
-                    return filter.grade === 'asc'
-                        ? safeCompare(noteA.grade, noteB.grade, 'asc')
-                        : safeCompare(noteB.grade, noteA.grade, 'desc');
+                    return filter.grade === 'asc' 
+                        ? safeCompare(noteA.grade, noteB.grade) 
+                        : safeCompare(noteB.grade, noteA.grade);
                 }
-
+        
                 if (filter.price) {
-                    return filter.price === 'asc'
-                        ? safeCompare(noteA.price, noteB.price, 'asc')
-                        : safeCompare(noteB.price, noteA.price, 'desc');
+                    return filter.price === 'asc' 
+                        ? safeCompare(noteA.price, noteB.price) 
+                        : safeCompare(noteB.price, noteA.price);
                 }
-
+        
                 if (filter.subject) {
-                    return filter.subject === 'asc'
-                        ? noteA.subject?.localeCompare(noteB.subject || '') || 0 
-                        : noteB.subject?.localeCompare(noteA.subject || '') || 0; 
+                    return filter.subject === 'asc' 
+                        ? safeCompare(noteA.subject, noteB.subject) 
+                        : safeCompare(noteB.subject, noteA.subject);
                 }
-
+        
                 if (filter.university) {
-                    return filter.university === 'asc'
-                        ? noteA.university?.localeCompare(noteB.university || '') || 0 
-                        : noteB.university?.localeCompare(noteA.university || '') || 0; 
+                    return filter.university === 'asc' 
+                        ? safeCompare(noteA.university, noteB.university) 
+                        : safeCompare(noteB.university, noteA.university);
                 }
-
+        
                 if (filter.ranking) {
-                    return filter.ranking === 'asc'
-                        ? safeCompare(noteA.ranking, noteB.ranking, 'asc')
-                        : safeCompare(noteB.ranking, noteA.ranking, 'desc');
+                    return filter.ranking === 'asc' 
+                        ? safeCompare(noteA.ranking, noteB.ranking) 
+                        : safeCompare(noteB.ranking, noteA.ranking);
                 }
-
+                
                 return 0; 
             });
+            
+            console.log(filteredNotes)
+        
         }
-
+        
 
         return filteredNotes.length > 0 ? filteredNotes.map(note => note.id ? note.id : "") : null;
 

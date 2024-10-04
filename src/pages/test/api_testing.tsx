@@ -42,15 +42,30 @@ const ApiTesting = () => {
 
 
     // Query Notes Test
-    // useEffect(() => {
-    //     const fetchUserData = async () => {
-    //         const data = await searchNotes("", true, {
-    //             grade:'asc'
-    //         } as Filter);
-    //         console.log(data);
-    //     }
-    //     fetchUserData()
-    // }, [])
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                // Fetch initial notes data
+                const data = await searchNotes("", true, {
+                    // grade: 'asc', // Uncomment if needed
+                    price: 'desc'
+                } as Filter);
+
+                // Check if data is valid
+                if (data) {
+                    // Iterate through each note ID sequentially
+                    // for (const noteId of data) {
+                    //     const note = await getNoteById(noteId);
+                    //     console.log(note?.price); // Print price one by one
+                    // }
+                }
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            }
+        };
+
+        fetchUserData();
+    }, []);
 
 
     // async function makeNewBundle(){
