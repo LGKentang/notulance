@@ -7,8 +7,13 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Separator } from '@/components/ui/separator';
-import { startReviewNote } from '@/handlers/review-handler';
+import { startReviewNote, updateNoteReviewResult } from '@/handlers/review-handler';
 import { uploadPdfToStorage } from '@/api/file-api';
+import { getAuth } from 'firebase/auth';
+import { getCurrentUserId, getUserById } from '@/api/user-api';
+import { Timestamp } from 'firebase/firestore';
+import { Note } from '@/interfaces/general/note';
+import { ReviewResult } from '@/interfaces/enum/review_enum';
 
 const Sell = () => {
     const [file, setFile] = useState<Blob | null>(null); 
@@ -19,24 +24,57 @@ const Sell = () => {
     const [university, setUniversity] = useState<string>("")
     const [subject, setSubject] = useState<string>("")
 
+    function clearField() {
+        setTitle('')
+        setDesc('')
+        setUniversity('')
+        setSubject('')
+    }
+
     function saveFile(event: React.ChangeEvent<HTMLInputElement>) {
         const file = event.target.files?.[0];
         if (file && file.type === "application/pdf") {
-          setFile(file);
+            setFile(file);
         } else {
-          console.error("Please select a valid PDF file.");
+            console.error("Please select a valid PDF file.");
         }
-      }
+    }
 
-    const handleUpload = () => {
+    const handleUpload = async () => {
         if (!file) {
             console.error("No PDF selected");
             return;
         }
-        // const fileUrl = uploadPdfToStorage(file)
-        // startReviewNote
+        const userId = await getCurrentUserId()
+        const user = await getUserById(userId)
+        if(!user){
+            console.error("User not logged in");
+            return
+        }
 
-        
+        const note: Note = {
+            title: title,
+            description: desc,
+            writerId: userId,
+            price: 17500,
+            subject: subject,
+            releaseDate: Timestamp.fromDate(new Date()),
+            fileId : '',
+            university: university,
+            grade: grade,
+            score: 0,
+            bundleId: null,
+            thumbnailUrl: "https://example.com/thumbnail.jpg",
+            totalPages: 100,
+            ranking: 2,
+        };
+
+        const uploaded = await startReviewNote(userId, note, file)
+        clearField();
+
+        console.log("Upload successful")
+
+        await updateNoteReviewResult(uploaded.id, ReviewResult.Accepted);
     }
 
     return (
@@ -111,6 +149,7 @@ const Sell = () => {
             <div className='flex flex-col px-44 justify-center items-center'>
                 <Button
                     variant="destructive"
+                    onClick={handleUpload}
                 >
                     Upload note
                 </Button>

@@ -16,7 +16,7 @@ const Profile = () => {
     const [notes, setNotes] = useState<any[] | null>();
 
     const handleSearch = async() => {
-        const tempIds = await searchNotes("Intro", false);
+        const tempIds = await searchNotes("tes", false);
 
         if(tempIds != null){
             console.log(tempIds)

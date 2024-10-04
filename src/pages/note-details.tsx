@@ -66,7 +66,7 @@ const NoteDetails = () => {
                     <div className='w-full h-[700px] items-center flex flex-col text-2xl mt-3'>
                         {note.fileId ? (
                             <Iframe 
-                                url={`${note.fileId}`}
+                                url={`${note.watermarkId}`}
                                 className="w-full h-full border-0"
                                 styles={{ overflow: 'hidden'}}
                             />

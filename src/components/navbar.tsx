@@ -42,7 +42,7 @@ const NavBar = () => {
     if (auth.currentUser) {
       try {
         // Sign out the user
-        await auth.signOut();
+        await auth.signOut()
         console.log("User has been logged out.");
       } catch (error) {
         console.error("Error during logout:", error);
