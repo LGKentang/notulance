@@ -8,10 +8,12 @@ import UploadNoteTest from "@/pages/test/upload_note_test";
 import Search from "@/pages/search";
 import NoteDetails from "@/pages/note-details";
 import Sell from "@/pages/sell";
-import ReviewPage from "@/pages/reviewPage";
-import ReviewPageDetail from "@/pages/reviewPageDetail";
-import PopoverDemo from "@/pages/test";
+import ReviewPage from "@/pages/review";
+import ReviewPageDetail from "@/pages/review-detail";
 import WatermarkTesting from "@/pages/test/watermark_testing";
+import Profile from "@/pages/profile";
+import NoteDetailsPreview from "@/pages/note-details-preview";
+import SellerProfile from "@/pages/seller-profile";
 
 const router = createBrowserRouter([
     {
@@ -35,6 +37,11 @@ const router = createBrowserRouter([
         errorElement: <Error />,
     },
     {
+        path: '/note/preview/:noteId',
+        element: <NoteDetailsPreview />,
+        errorElement: <Error />
+    },
+    {
         path: '/note/:noteId',
         element: <NoteDetails />,
         errorElement: <Error />
@@ -45,13 +52,23 @@ const router = createBrowserRouter([
         errorElement: <Error />
     },
     {
-        path: '/reviewPage',
+        path: '/review',
         element: <ReviewPage />,
         errorElement: <Error />,
     },
     {
-        path: '/reviewPageDetail/:reviewId',
+        path: '/review/:reviewId',
         element: <ReviewPageDetail />,
+        errorElement: <Error />,
+    },
+    {
+        path: '/profile',
+        element: <Profile />,
+        errorElement: <Error />,
+    },
+    {
+        path: '/seller-profile',
+        element: <SellerProfile />,
         errorElement: <Error />,
     },
 

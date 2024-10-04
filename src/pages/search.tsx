@@ -1,4 +1,4 @@
-import { getNotesByIds } from "@/api/note-api";
+import { getNoteById, getNotesByIds } from "@/api/note-api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { NavBar } from "@/components/navbar";
@@ -31,7 +31,13 @@ const Search = () => {
         const tempIds = await searchNotes(search, isFilterUsed, filter);
 
         if(tempIds != null){
-            const tempNotes = await getNotesByIds(tempIds)
+            console.log(tempIds)
+            
+            const tempNotes = [];
+            for (const element of tempIds) {
+                const note = await getNoteById(element);
+                tempNotes.push(note);
+            }
             setNotes(tempNotes)
             console.log(tempNotes)
         }
@@ -133,7 +139,7 @@ const Search = () => {
                 <div className="grid px-44 grid-cols-3 justify-between gap-10 mb-4">
                     {notes.map((note, index) => {
                         return(
-                            <a href={`/note/${note.id}`} key={index}>
+                            <a href={`/note/preview/${note.id}`} key={index}>
                                 <Card className="border-black border-2 drop-shadow-2xl">
                                     <CardHeader className="flex p-0 w-full max-h-48 items-center overflow-hidden">
                                         <img src={note.thumbnailUrl} alt="" />
@@ -154,7 +160,8 @@ const Search = () => {
                 </div>
             ) : (
                 <div className="flex px-44 justify-center text-red-500">
-                    No notes found.
+                    <img src="/loading.png"/>
+                    <h1 className="pt-32">Loading.. .. ..</h1>
                 </div>
             )}
         </div>

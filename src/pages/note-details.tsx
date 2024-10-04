@@ -1,14 +1,9 @@
 import { getNoteById } from '@/api/note-api';
 import { NavBar } from '@/components/navbar';
-import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { addItemToCart } from '@/api/cart-api';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { CartItem } from '@/interfaces/transaction/cart';
-import { Note } from '@/interfaces/general/note';
-import { addCartItemToCart } from '@/handlers/cart-handler';
-import { PDFDocument } from 'pdf-lib';
+import Iframe from 'react-iframe'
 
 
 const NoteDetails = () => {
@@ -16,27 +11,6 @@ const NoteDetails = () => {
 
     const [userId, setUserId] = useState<any | null>(null);
     const [note, setNote] = useState<any | null>(null);
-    const [preview, setPreview] = useState<string | null>(null);
-
-
-    const extractFirstPage = async () => {
-        const pdfUrl = note.fileId
-
-        const response = await fetch(pdfUrl);
-        const pdfBuffer = await response.arrayBuffer();
-
-        const pdfDoc = await PDFDocument.load(pdfBuffer);
-        const newPdfDoc = await PDFDocument.create();
-        const [firstPage] = await newPdfDoc.copyPages(pdfDoc, [0]);
-        newPdfDoc.addPage(firstPage);
-    
-        const newPdfBytes = await newPdfDoc.save();
-
-        const pdfBlob = new Blob([newPdfBytes], { type: 'application/pdf' });
-        const newPdfUrl = URL.createObjectURL(pdfBlob);
-        setPreview(newPdfUrl)
-        console.log(preview)
-    };
 
     useEffect(() => {
         const fetchNote = async () => {
@@ -65,40 +39,6 @@ const NoteDetails = () => {
         return () => unsubscribe();
     }, [noteId]);
     
-    useEffect(() => {
-        if (note && note.fileId) {
-            extractFirstPage();
-        }
-    }, [note]); 
-
-    async function handleAddToCart(){
-        const uid = userId
-        const noteObject: Note = {
-            id: note.id,
-            title: note.title,
-            description: note.description,
-            writerId: note.writerId,
-            price: note.price,
-            subject: note.subject,
-            releaseDate: note.releaseDate,
-            university: note.university,
-            grade: note.grade,
-            fileId: note.fileId,
-            score: note.score,
-            bundleId: note.bundleId,
-            thumbnailUrl: note.thumbnailUrl,
-            totalPages: note.totalPages,
-            ranking: note.ranking,
-        }
-        const cartItem: CartItem = {
-            type: 'note',
-            item: noteObject   
-        }
-        console.log(cartItem)
-
-        await addCartItemToCart(cartItem);
-        window.location.reload()
-    }
 
 
     return (
@@ -123,32 +63,15 @@ const NoteDetails = () => {
                     <div className='text-xl mb-2'>
                             {`Score : ${note.score}`}
                     </div>
-                    <div className='text-3xl underline mb-2'>
-                            {`Rp. ${note.price}`}
-                    </div>
-                    <div>
-                        <Button 
-                            onClick={handleAddToCart} 
-                            variant="agree"
-                            className='rounded-sm p-6 text-2xl'
-                        >
-                            Add to cart
-                        </Button>
-                    </div>
                     <div className='w-full h-[700px] items-center flex flex-col text-2xl mt-3'>
-                        Preview
-                        {preview ? (
-                            <iframe 
-                                src={`${preview}`}
+                        {note.fileId ? (
+                            <Iframe 
+                                url={`${note.watermarkId}`}
                                 className="w-full h-full border-0"
-                                style={{ overflow: 'hidden', pointerEvents: 'none' }}
-                                title="PDF Preview"
-                            >
-                                This browser does not support PDFs. Please download the PDF to view it: <a href={note.fileId}>Download PDF</a>.
-                            </iframe>
+                                styles={{ overflow: 'hidden'}}
+                            />
                         ) : <></>}
                     </div>
-
                 </div>
             ) : (
                 <div className='w-full h-full flex justify-center items-center'>
