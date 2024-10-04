@@ -160,7 +160,7 @@ const Search = () => {
                 </div>
             ) : (
                 <div className="flex px-44 justify-center text-red-500">
-                    No notes found.
+                    <h1>Loading.. .. ..</h1>
                 </div>
             )}
         </div>

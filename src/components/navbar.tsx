@@ -116,9 +116,9 @@ const NavBar = () => {
                           {cart.map((x: any, index: number) => 
                             <CartChild title={x.item.title} index={index} key={index}/>
                           )}
-                        </div>
+                        </div>  
                         <div>
-                          <span>Total price: Rp37,500</span>
+                          <span>Total price: Rp-</span>
                         </div>
                         <div className="flex justify-between">
                         <Button variant="decline">Clear Cart</Button>
@@ -156,7 +156,7 @@ const NavBar = () => {
                 </>
                 
               ) : (
-                <a href="/login"><Button variant="default">Sign In</Button></a>
+                <a href="/login"><Button variant="default" className="bg-red-500">Sign In</Button></a>
               )}
           </div>
       </div>

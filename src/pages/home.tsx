@@ -52,7 +52,7 @@ const Home = () => {
                     <br />
                     <form className="flex space-x-2">
                         <Input type="text" placeholder="“Deep Learning Notes in BINUS University”" className="outline rounded-2xl w-[40rem]" />
-                        <Button type="submit" className="rounded-full">
+                        <Button type="submit" className="rounded-full" variant={"decline"}>
                             <img src="/search-transparent.png" className="w-8" style={{filter:'invert(100%)'}} />
 
                         </Button>
