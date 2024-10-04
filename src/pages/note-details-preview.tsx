@@ -22,7 +22,7 @@ const NoteDetailsPreview = () => {
 
 
     const extractFirstPage = async () => {
-        const pdfUrl = note.fileId
+        const pdfUrl = note.watermarkId
 
         const response = await fetch(pdfUrl);
         const pdfBuffer = await response.arrayBuffer();
@@ -145,7 +145,7 @@ const NoteDetailsPreview = () => {
                             <Iframe 
                                 url={`${preview}`}
                                 className="w-full h-full border-0"
-                                styles={{ overflow: 'hidden', pointerEvents: 'none' }}
+                                styles={{ overflow: 'hidden'}}
                             />
                         ) : <></>}
                     </div>
