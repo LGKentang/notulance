@@ -79,7 +79,7 @@ const Home = () => {
                         </CardContent>
                         <CardHeader>
                             <CardTitle>Turn notes to money.</CardTitle>
-                            <CardDescription>Deploy your new project in one-click.</CardDescription>
+                            <CardDescription>Your deployed note will be an income</CardDescription>
                         </CardHeader>
                     </Card>
                     <Card className="w-[300px] drop-shadow-2xl outline">
@@ -88,7 +88,7 @@ const Home = () => {
                         </CardContent>
                         <CardHeader>
                             <CardTitle>Valid and trusted.</CardTitle>
-                            <CardDescription>Deploy your new project in one-click.</CardDescription>
+                            <CardDescription>We ensure the note review as priority</CardDescription>
                         </CardHeader>
                     </Card>
                     <div>

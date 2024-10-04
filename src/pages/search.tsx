@@ -160,7 +160,8 @@ const Search = () => {
                 </div>
             ) : (
                 <div className="flex px-44 justify-center text-red-500">
-                    <h1>Loading.. .. ..</h1>
+                    <img src="/loading.png"/>
+                    <h1 className="pt-32">Loading.. .. ..</h1>
                 </div>
             )}
         </div>

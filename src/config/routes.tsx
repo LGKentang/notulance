@@ -13,6 +13,7 @@ import ReviewPageDetail from "@/pages/review-detail";
 import WatermarkTesting from "@/pages/test/watermark_testing";
 import Profile from "@/pages/profile";
 import NoteDetailsPreview from "@/pages/note-details-preview";
+import SellerProfile from "@/pages/seller-profile";
 
 const router = createBrowserRouter([
     {
@@ -63,6 +64,11 @@ const router = createBrowserRouter([
     {
         path: '/profile',
         element: <Profile />,
+        errorElement: <Error />,
+    },
+    {
+        path: '/seller-profile',
+        element: <SellerProfile />,
         errorElement: <Error />,
     },
 

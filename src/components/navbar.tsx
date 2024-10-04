@@ -143,7 +143,7 @@ const NavBar = () => {
                         <DropdownMenuItem onClick={() => {window.location.href = '/profile'}}>
                           Profile
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => {window.location.href = '/seller-profile'}}>
                           Seller Profile
                         </DropdownMenuItem>
                       </DropdownMenuGroup>
