@@ -10,6 +10,7 @@ import { Note } from '@/interfaces/general/note';
 import { addCartItemToCart } from '@/handlers/cart-handler';
 import { PDFDocument } from 'pdf-lib';
 import Iframe from 'react-iframe'
+import Swal from 'sweetalert2';
 
 
 const NoteDetailsPreview = () => {
@@ -19,7 +20,7 @@ const NoteDetailsPreview = () => {
     const [note, setNote] = useState<any | null>(null);
     const [preview, setPreview] = useState<string | null>(null);
     const [sandbox, setSandbox] = useState<string>('')
-
+    const [loading, setLoading] = useState(false);
 
     const extractFirstPage = async () => {
         const pdfUrl = note.watermarkId
@@ -76,6 +77,7 @@ const NoteDetailsPreview = () => {
     }, [note]); 
 
     async function handleAddToCart(){
+        setLoading(true);
         const uid = userId
         const noteObject: Note = {
             id: note.id,
@@ -101,9 +103,17 @@ const NoteDetailsPreview = () => {
         console.log(cartItem)
 
         await addCartItemToCart(cartItem);
-        window.location.reload()
+        Swal.fire({
+            title: "Added to Cart Successfuly!",
+            icon: "success",
+            confirmButtonColor: "#F44336"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                setLoading(false);
+                window.location.href = '/note/search'
+            }
+          });
     }
-
 
     return (
         <div className="w-screen h-screen flex flex-col font-itim overflow-y-scroll">
@@ -156,6 +166,16 @@ const NoteDetailsPreview = () => {
                     <h1>Loading...</h1>
                 </div>
             )}
+
+            {loading ? 
+                <div className="bg-black w-screen h-screen absolute opacity-50">
+                    <p className="absolute top-1/2 left-1/2 text-white text-5xl transform -translate-x-1/2 -translate-y-1/2">
+                        Loading...
+                    </p>
+                </div>
+                :
+                <></>
+            }
         </div>
     );
 };

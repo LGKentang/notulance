@@ -96,7 +96,7 @@ const NavBar = () => {
   }, [userGlobal]); // Depend on userGlobal
 
   return (
-    <div className="w-full flex px-20 py-8 items-center justify-between font-itim shadow-md drop-shadow-sm">
+    <div className="w-full flex px-20 py-8 items-center justify-between font-itim shadow-lg drop-shadow-sm">
       <div className="flex items-center">
         <a
           href="/"
@@ -136,7 +136,7 @@ const NavBar = () => {
                   </div>
                   <div className="flex justify-between">
                     <Button variant="decline">Clear Cart</Button>
-                    <Button variant="agree" onClick={checkoutCart}>Checkout!</Button>
+                    <Button variant="agree" onClick={() => { checkoutCart() }}>Checkout!</Button>
                   </div>
                 </div>
               </PopoverContent>

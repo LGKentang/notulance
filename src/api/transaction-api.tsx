@@ -2,14 +2,23 @@ import { db } from "@/firebase/firebase";
 import { OrderStatus, PaymentStatus } from "@/interfaces/enum/transaction_enum";
 import { History, Transaction } from "@/interfaces/transaction/transaction";
 import { addDoc, collection, doc, getDoc, Timestamp, updateDoc } from "firebase/firestore";
+import Swal from "sweetalert2";
 
 async function createTransaction(transaction: Transaction) {
   try {
     const transactionCollection = collection(db, 'transactions');
     const transactionDocRef = await addDoc(transactionCollection, transaction);
     
-    console.log("Transaction created successfully with ID:", transactionDocRef.id);
-    return transactionDocRef.id;
+    Swal.fire({
+      title: "Transaction Made Successfuly!",
+      icon: "success",
+      confirmButtonColor: "#F44336"
+    }).then((result) => {
+      if (result.isConfirmed) {
+          console.log("Transaction created successfully with ID:", transactionDocRef.id);
+          return transactionDocRef.id;
+      }
+    });
   }
   catch (e) {
     console.error("Error creating transaction:", e);

@@ -33,6 +33,7 @@
     "react-iframe": "^1.8.5",
     "react-pdf": "^9.1.1",
     "react-router-dom": "^6.26.2",
+    "sweetalert2": "^11.14.3",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^10.0.0"

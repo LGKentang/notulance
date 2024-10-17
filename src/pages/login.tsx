@@ -3,17 +3,20 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input";
 import { userLogin } from "@/handlers/auth-handler";
 import { useState } from "react";
-import { cn } from "@/lib/utils";
+import Swal from 'sweetalert2'
 
 const Login = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const [loading, setLoading] = useState(false);
 
     const handleLogin = async() => {
         try {
+            setLoading(true);
             const response = await userLogin(email, password);
 
             if (response && response.success) {
+                setLoading(false);
                 window.location.href = '/'; 
             }
         } catch (error) {
@@ -64,6 +67,15 @@ const Login = () => {
                     </CardFooter>
                 </Card>
             </div>
+            {loading ? 
+                <div className="bg-black w-screen h-screen absolute opacity-50">
+                    <p className="absolute top-1/2 left-1/2 text-white text-5xl transform -translate-x-1/2 -translate-y-1/2">
+                        Loading...
+                    </p>
+                </div>
+                :
+                <></>
+            }
         </div>
     );
 };

@@ -3,12 +3,14 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input";
 import { userRegister } from "@/handlers/auth-handler";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 const Register = () => {
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
+    const [loading, setLoading] = useState(false);
 
     const clearField = () => {
         setName("")
@@ -19,11 +21,21 @@ const Register = () => {
 
     const handleRegister = async () => {
         try {
+            setLoading(true);
             const response = await userRegister(name, email, confirmPassword, password);
         
             if (response && response.success) {
                 clearField();
-                window.location.href = '/login'; 
+                setLoading(false);
+                Swal.fire({
+                    title: "Registration success!",
+                    icon: "success",
+                    confirmButtonColor: "#F44336"
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '/login'; 
+                    }
+                  });
             }
         } catch (error) {
             console.error("Error during registration:", error);
@@ -89,6 +101,15 @@ const Register = () => {
                     </CardFooter>
                 </Card>
             </div>
+            {loading ? 
+                <div className="bg-black w-screen h-screen absolute opacity-50">
+                    <p className="absolute top-1/2 left-1/2 text-white text-5xl transform -translate-x-1/2 -translate-y-1/2">
+                        Loading...
+                    </p>
+                </div>
+                :
+                <></>
+            }
         </div>
     );
 };
