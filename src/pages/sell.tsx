@@ -82,15 +82,24 @@ const Sell = () => {
             <NavBar />
             <div className='flex p-10 px-44 justify-center items-center space-x-2'>
                 <div className='text-red-400'>
+                    <img src='/check.png' className='w-20' />
+                    <p>
                     Upload notes
+                    </p>
                 </div>
-                <Separator className='w-[10%] rounded-full'/>
+                <Separator className='w-[10%] h-2 rounded-full'/>
                 <div className='text-gray-400'>
+                    <img src='/check-2.png' className='w-20' />
+                    <p>
                     Reviewing notes
+                    </p>
                 </div>
-                <Separator className='w-[10%] rounded-full'/>
+                <Separator className='w-[10%] h-2 rounded-full'/>
                 <div className='text-gray-400'>
+                    <img src='/check-2.png' className='w-20' />
+                    <p>
                     Reviewing result
+                    </p>
                 </div>
             </div>
             <Separator />
