@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import Footer from "@/components/footer";
 
 const Home = () => {
     // Test Fetch
@@ -103,9 +104,7 @@ const Home = () => {
                     <img src="/Home3B.png" className="" />
                 </div>
             </div>
-            <div id="footer" className="p-10 bg-white flex justify-center">
-                <span className="text-xl">Copyright - xxxxx 2024</span>
-            </div>
+            <Footer />
         </div>
 
     );

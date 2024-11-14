@@ -11,6 +11,7 @@ import { addCartItemToCart } from '@/handlers/cart-handler';
 import { PDFDocument } from 'pdf-lib';
 import Iframe from 'react-iframe'
 import Swal from 'sweetalert2';
+import Footer from '@/components/footer';
 
 
 const NoteDetailsPreview = () => {
@@ -176,6 +177,7 @@ const NoteDetailsPreview = () => {
                 :
                 <></>
             }
+        <Footer />
         </div>
     );
 };

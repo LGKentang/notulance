@@ -9,6 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { Filter } from "@/interfaces/general/filter";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
+import Footer from "@/components/footer";
 
 const Search = () => {
     const [search, setSearch] = useState<string>('')
@@ -164,6 +165,7 @@ const Search = () => {
                     <h1 className="pt-32">Loading.. .. ..</h1>
                 </div>
             )}
+        <Footer />
         </div>
     );
 };
