@@ -27,12 +27,13 @@ import { getCartById } from "@/api/cart-api";
 import { getUserByAuthId } from "@/api/user-api";
 import { FirebaseUser } from "@/interfaces/user/firebase-user";
 import { checkoutCart } from "@/handlers/cart-handler";
-
+import { FiSidebar } from "react-icons/fi";
 const NavBar = () => {
   const [authenticated, setAuthenticated] = useState<boolean>(false);
   const [cart, setCart] = useState<any | null>([]);
   const [userGlobal, setUser] = useState<FirebaseUser | null>(null);
   const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
 
   const fetchCart = async () => {
     if (userGlobal?.cartId) {
@@ -41,7 +42,7 @@ const NavBar = () => {
 
       if (theCart != null) {
         const cartItems = theCart.items;
-        setTotalPrice(theCart.totalPrice)
+        setTotalPrice(theCart.totalPrice);
         setCart(cartItems);
         console.log(cartItems);
       }
@@ -50,15 +51,13 @@ const NavBar = () => {
 
   const onRemove = async () => {
     await fetchCart();
-  }
+  };
 
   const handleLogout = async () => {
     const auth = getAuth();
 
-    // Check if a user is currently signed in
     if (auth.currentUser) {
       try {
-        // Sign out the user
         await auth.signOut();
         console.log("User has been logged out.");
       } catch (error) {
@@ -80,7 +79,6 @@ const NavBar = () => {
         setUser(userData);
 
         if (!userData) throw new Error("User is not found");
-
       } else {
         setAuthenticated(false);
       }
@@ -89,14 +87,13 @@ const NavBar = () => {
     return () => unsubscribe();
   }, []);
 
-  // Separate effect for fetching cart items
   useEffect(() => {
-
     fetchCart();
-  }, [userGlobal]); // Depend on userGlobal
+  }, [userGlobal]);
 
   return (
-    <div className="w-full flex px-20 py-8 items-center justify-between font-itim shadow-lg drop-shadow-sm">
+    <div className="w-full flex px-10 py-8 items-center justify-between font-itim shadow-lg drop-shadow-sm md:px-20">
+
       <div className="flex items-center">
         <a
           href="/"
@@ -106,7 +103,9 @@ const NavBar = () => {
           <div>Notulance</div>
         </a>
       </div>
-      <div id="right" className="flex items-center space-x-16">
+
+      {/* Desktop Navbar */}
+      <div id="right" className="flex items-center space-x-16 hidden lg:flex">
         <a href="/note/search"><Button variant="link" className="text-xl">Search</Button></a>
         <a href="/note/sell"><Button variant="link" className="text-xl">Sell</Button></a>
 
@@ -115,7 +114,7 @@ const NavBar = () => {
             <Popover>
               <PopoverTrigger asChild>
                 <Button variant="outline" className="w-14 rounded-3xl">
-                  <img src="https://cdn-icons-png.flaticon.com/512/1413/1413908.png"></img>
+                  <img src="https://cdn-icons-png.flaticon.com/512/1413/1413908.png" />
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-80 z-50 bg-white">
@@ -141,6 +140,7 @@ const NavBar = () => {
                 </div>
               </PopoverContent>
             </Popover>
+
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="p-0">
@@ -168,11 +168,49 @@ const NavBar = () => {
               </DropdownMenuContent>
             </DropdownMenu>
           </>
-
         ) : (
           <a href="/login"><Button variant="default" className="bg-red-500">Sign In</Button></a>
         )}
       </div>
+
+
+      {/* Mobile Sidebar */}
+      <div className="lg:hidden sticky z-20">
+        <Button onClick={() => setIsSidebarOpen(!isSidebarOpen)} variant="outline" className="p-2">
+          <FiSidebar />
+        </Button>
+
+        {isSidebarOpen && (
+          <div className="fixed top-0 left-0 w-full h-max bg-white shadow-xl z-10000 transform transition-all duration-300 ease-in-out">
+            <div className="flex justify-between p-4">
+              <h4 className="text-2xl font-semibold">Menu</h4>
+              <Button onClick={() => setIsSidebarOpen(false)} variant="link" className="text-2xl text-gray-700 hover:text-red-500">
+                X
+              </Button>
+            </div>
+            <div className="flex flex-col items-center space-y-6 p-4">
+              <a href="/note/search">
+                <Button variant="link" className="text-2xl text-gray-700 hover:text-red-500 text-center">Search</Button>
+              </a>
+              <a href="/note/sell">
+                <Button variant="link" className="text-2xl text-gray-700 hover:text-red-500 text-center">Sell</Button>
+              </a>
+              {authenticated ? (
+                <>
+                  <Button variant="link" className="text-2xl text-gray-700 hover:text-red-500 text-center" onClick={() => { window.location.href = '/profile' }}>Profile</Button>
+                  <Button variant="link" className="text-2xl text-gray-700 hover:text-red-500 text-center" onClick={() => { window.location.href = '/seller-profile' }}>Seller Profile</Button>
+                  <Button variant="link" className="text-2xl text-gray-700 hover:text-red-500 text-center" onClick={handleLogout}>Log out</Button>
+                </>
+              ) : (
+                <a href="/login">
+                  <Button variant="default" className="bg-red-500 hover:bg-red-600 text-white text-2xl text-center">Sign In</Button>
+                </a>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+
     </div>
   );
 };
