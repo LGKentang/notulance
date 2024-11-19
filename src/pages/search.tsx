@@ -138,7 +138,7 @@ const Search = () => {
             
             {/* Notes */}
             {notes && notes.length > 0 ? (
-                <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 px-44 justify-between gap-10 mb-4">
+                <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 px-6 sm:px-24 md:px-40 justify-between gap-10 mb-4">
                     {notes.map((note, index) => {
                         return(
                             <a href={`/note/preview/${note.id}`} key={index}>
@@ -161,7 +161,7 @@ const Search = () => {
                     })}
                 </div>
             ) : (
-                <div className="flex px-44 justify-center text-red-500">
+                <div className="flex px-6 sm:px-32 md:px-40 justify-center text-red-500">
                     <img src="/loading.png"/>
                     <h1 className="pt-32">Loading.. .. ..</h1>
                 </div>
