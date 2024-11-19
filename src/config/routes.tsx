@@ -14,6 +14,7 @@ import WatermarkTesting from "@/pages/test/watermark_testing";
 import Profile from "@/pages/profile";
 import NoteDetailsPreview from "@/pages/note-details-preview";
 import SellerProfile from "@/pages/seller-profile";
+import ProtectedRoute from "@/components/fallback/protected-route";
 
 const router = createBrowserRouter([
     {
@@ -69,6 +70,13 @@ const router = createBrowserRouter([
     {
         path: '/seller-profile',
         element: <SellerProfile />,
+        errorElement: <Error />,
+    },
+    {
+        path: '/review-authorization',
+        element: 
+        <ProtectedRoute>
+        </ProtectedRoute>,
         errorElement: <Error />,
     },
 

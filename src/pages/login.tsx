@@ -1,3 +1,4 @@
+import Footer from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -93,8 +94,11 @@ const Login = () => {
                     <></>
                 }
             </div>
-            <div id="footer" className="p-10 bg-white flex justify-center">
-                <span className="text-xl">Copyright - xxxxx 2024</span>
+            <div id="footer" className="mt-10 p-10 bg-white flex justify-center">
+                <div className='text-center'>
+                    <p className="text-xl">Copyright. @2024. All Right Reserved.</p>
+                    <p className="text-xs">Made by Darren, Jessica, Rey, Wilmer</p>
+                </div>
             </div>
         </div>
     );

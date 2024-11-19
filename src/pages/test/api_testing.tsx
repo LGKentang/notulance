@@ -12,6 +12,7 @@ import { handleCreateBundle } from "@/handlers/bundle-handler";
 import { ReviewResult } from "@/interfaces/enum/review_enum";
 import { purchaseTransaction } from "@/handlers/payment-handler";
 import { PaymentMethod } from "@/interfaces/enum/transaction_enum";
+import { userRegister } from "@/handlers/auth-handler";
 
 const ApiTesting = () => {
 
@@ -170,10 +171,27 @@ const ApiTesting = () => {
         await purchaseTransaction("mOhegvWjT6B9059Y6JGV", PaymentMethod.Gopay)
     }
 
+    async function registerAdmin() {
+        try {
+            const response = await userRegister('wiladmin', 'wiladmin@email.com', 'wiladmin123', 'wiladmin123', 'admin');
+        
+            if (response && response.success) {
+                window.location.href = '/login'; 
+                alert('sukses')
+            }
+        } catch (error) {
+            console.error("Error during registration:", error);
+        }
+    }
+
     return <>
 
         {/* <input type="file" />
         <br /><br /> */}
+
+        <button onClick={registerAdmin} className="text-white mb-5">
+            Register Admin
+        </button>
 
         <button onClick={acceptNoteReview} className="text-white mb-5">
             Accept Note

@@ -22,7 +22,7 @@ const Register = () => {
     const handleRegister = async () => {
         try {
             setLoading(true);
-            const response = await userRegister(name, email, confirmPassword, password);
+            const response = await userRegister(name, email, confirmPassword, password, 'user');
         
             if (response && response.success) {
                 clearField();
@@ -69,7 +69,7 @@ const Register = () => {
                             <CardDescription className="text-xl text-gray-400">Let's get to know each other</CardDescription>
                         </CardHeader>
                         <CardContent>
-                            <p>Email</p>
+                            <p>Name</p>
                             <Input
                                 className=""
                                 type="text" 
@@ -129,8 +129,11 @@ const Register = () => {
                     <></>
                 }
             </div>
-            <div id="footer" className="p-10 bg-white flex justify-center">
-                <span className="text-xl">Copyright - xxxxx 2024</span>
+            <div id="footer" className="mt-10 p-10 bg-white flex justify-center">
+                <div className='text-center'>
+                    <p className="text-xl">Copyright. @2024. All Right Reserved.</p>
+                    <p className="text-xs">Made by Darren, Jessica, Rey, Wilmer</p>
+                </div>
             </div>
         </div>
     );

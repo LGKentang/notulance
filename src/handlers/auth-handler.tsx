@@ -26,7 +26,7 @@ async function userLogin(email: string, password: string) {
     }
 }
 
-async function userRegister(name: string, email: string, password: string, confirmPassword: string) {
+async function userRegister(name: string, email: string, password: string, confirmPassword: string, role: string) {
 
     const trimmedName = name.trim();
     const trimmedEmail = email.trim();
@@ -56,6 +56,12 @@ async function userRegister(name: string, email: string, password: string, confi
             cartId: cartId,
             role: "",
             authId: res.user.uid
+        }
+        if(role === 'admin'){
+            user.role = 'admin';
+        }
+        else{
+            user.role = 'user';
         }
 
         const response = await createUser(user);
