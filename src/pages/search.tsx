@@ -53,29 +53,29 @@ const Search = () => {
         <div className="w-screen h-screen flex flex-col overflow-scroll font-itim">
             <NavBar />
 
-            {/* Search Bar */}
-            <div className="flex flex-col w-full px-52 py-6">
-                <div className="flex items-center space-x-5 mb-2">
+            <div className="flex flex-col w-full px-6 sm:px-32 md:px-52 py-6">
+                {/* Search Bar */}
+                <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-5 mb-2">
                     <Input 
                         placeholder="Search..." 
                         value={search}
-                        onChange={(e)=>{setSearch(e.target.value)}}
-                        className="text-xl p-6"
+                        onChange={(e) => setSearch(e.target.value)}
+                        className="text-xl p-4 w-full md:w-[75%]"
                     />
                     <Button 
                         variant="destructive"
                         onClick={handleSearch}
-                        className="text-xl p-6"
+                        className="text-xl p-4 w-full md:w-[25%]"
                     >
                         Search
                     </Button>
                 </div>
                 {/* Filter */}
-                <div className="flex space-x-4 justify-center">
-                    <div className="flex flex-col items-center w-[25%]">
+                <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 justify-center">
+                    <div className="flex flex-col items-center w-full md:w-[25%]">
                         <Label className="text-lg">Grade</Label>
                         <Select onValueChange={(value) => handleFilterChange('grade', value as 'asc' | 'desc')}>
-                            <SelectTrigger className="">
+                            <SelectTrigger>
                                 <SelectValue placeholder="None" />
                             </SelectTrigger>
                             <SelectContent>
@@ -84,10 +84,10 @@ const Search = () => {
                             </SelectContent>
                         </Select>
                     </div>
-                    <div className="flex flex-col items-center w-[25%]">
+                    <div className="flex flex-col items-center w-full md:w-[25%]">
                         <Label className="text-lg">Price</Label>
                         <Select onValueChange={(value) => handleFilterChange('price', value as 'asc' | 'desc')}>
-                            <SelectTrigger className="">
+                            <SelectTrigger>
                                 <SelectValue placeholder="None" />
                             </SelectTrigger>
                             <SelectContent>
@@ -96,10 +96,10 @@ const Search = () => {
                             </SelectContent>
                         </Select>
                     </div>
-                    <div className="flex flex-col items-center w-[25%]">
+                    <div className="flex flex-col items-center w-full md:w-[25%]">
                         <Label className="text-lg">Subject</Label>
                         <Select onValueChange={(value) => handleFilterChange('subject', value as 'asc' | 'desc')}>
-                            <SelectTrigger className="">
+                            <SelectTrigger>
                                 <SelectValue placeholder="None" />
                             </SelectTrigger>
                             <SelectContent>
@@ -108,10 +108,10 @@ const Search = () => {
                             </SelectContent>
                         </Select>
                     </div>
-                    <div className="flex flex-col items-center w-[25%]">
+                    <div className="flex flex-col items-center w-full md:w-[25%]">
                         <Label className="text-lg">University</Label>
                         <Select onValueChange={(value) => handleFilterChange('university', value as 'asc' | 'desc')}>
-                            <SelectTrigger className="">
+                            <SelectTrigger>
                                 <SelectValue placeholder="None" />
                             </SelectTrigger>
                             <SelectContent>
@@ -120,10 +120,10 @@ const Search = () => {
                             </SelectContent>
                         </Select>
                     </div>
-                    <div className="flex flex-col items-center w-[25%]">
+                    <div className="flex flex-col items-center w-full md:w-[25%]">
                         <Label className="text-lg">Ranking</Label>
                         <Select onValueChange={(value) => handleFilterChange('ranking', value as 'asc' | 'desc')}>
-                            <SelectTrigger className="">
+                            <SelectTrigger>
                                 <SelectValue placeholder="None" />
                             </SelectTrigger>
                             <SelectContent>
@@ -135,9 +135,10 @@ const Search = () => {
                 </div>
             </div>
 
+            
             {/* Notes */}
             {notes && notes.length > 0 ? (
-                <div className="grid px-44 grid-cols-3 justify-between gap-10 mb-4">
+                <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 px-44 justify-between gap-10 mb-4">
                     {notes.map((note, index) => {
                         return(
                             <a href={`/note/preview/${note.id}`} key={index}>
