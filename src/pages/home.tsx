@@ -101,8 +101,8 @@ const Home = () => {
                     <h1 className="mb-8 sm:mb-16 text-center sm:text-left">Anywhere, any note.</h1>
                 </div>
 
-                <div className="flex flex-row gap-20">
-                    <div className="sm:w-1/2 grid grid-cols-3 gap-4 justify-items-center items-center">
+                <div className="flex flex-col sm:flex-row gap-20">
+                    <div className="sm:w-1/2 grid grid-cols-2 sm:grid-cols-3 gap-4 justify-items-center items-center">
                         <img src="/univ/binus.jpg" alt="" className="w-[150px] h-auto object-cover" />
                         <img src="/univ/itb.png" alt="" className="w-[120px] h-auto object-cover" />
                         <img src="/univ/ui.png" alt="" className="w-[110px] h-auto object-cover" />
@@ -117,26 +117,6 @@ const Home = () => {
                 </div>
 
             </div>
-
-            {/* <div id="section-3" className="p-5 sm:p-20 bg-white">
-                <h1 className="mb-8 sm:mb-16 text-center sm:text-left">Anywhere, any note.</h1>
-
-                <div className="flex flex-wrap gap-4">
-
-                    <div className="sm:w-1/2 grid grid-cols-3 gap-4">
-                        <img src="/univ/binus.jpg" alt="" className="w-[150px] h-auto object-cover" />
-                        <img src="/univ/itb.png" alt="" className="w-[150px] h-auto object-cover" />
-                        <img src="/univ/ui.png" alt="" className="w-[150px] h-auto object-cover" />
-                        <img src="/univ/brawijaya.jpeg" alt="" className="w-[150px] h-auto object-cover" />
-                        <img src="/univ/unpad.png" alt="" className="w-[150px] h-auto object-cover" />
-                        <img src="/univ/ukp.jpeg" alt="" className="w-[150px] h-auto object-cover" />
-                    </div>
-
-                    <div className="sm:w-1/2 flex justify-center items-center">
-                        <img src="/Home3B.png" className="w-full sm:w-auto max-w-full object-cover" alt="Girl Image" />
-                    </div>
-                </div>
-            </div> */}
 
 
 
