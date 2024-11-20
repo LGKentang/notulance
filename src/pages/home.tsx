@@ -102,13 +102,13 @@ const Home = () => {
                 </div>
 
                 <div className="flex flex-row gap-20">
-                    <div className="sm:w-1/2 grid grid-cols-3 gap-4">
+                    <div className="sm:w-1/2 grid grid-cols-3 gap-4 justify-items-center items-center">
                         <img src="/univ/binus.jpg" alt="" className="w-[150px] h-auto object-cover" />
-                        <img src="/univ/itb.png" alt="" className="w-[150px] h-auto object-cover" />
-                        <img src="/univ/ui.png" alt="" className="w-[150px] h-auto object-cover" />
-                        <img src="/univ/brawijaya.jpeg" alt="" className="w-[150px] h-auto object-cover" />
+                        <img src="/univ/itb.png" alt="" className="w-[120px] h-auto object-cover" />
+                        <img src="/univ/ui.png" alt="" className="w-[110px] h-auto object-cover" />
+                        <img src="/univ/brawijaya.jpeg" alt="" className="w-[120px] h-auto object-cover" />
                         <img src="/univ/unpad.png" alt="" className="w-[150px] h-auto object-cover" />
-                        <img src="/univ/ukp.jpeg" alt="" className="w-[150px] h-auto object-cover" />
+                        <img src="/univ/ukp.jpeg" alt="" className="w-[120px] h-auto object-cover" />
                     </div>
 
                     <div className="sm:w-1/2 flex justify-center items-center">
