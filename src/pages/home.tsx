@@ -16,28 +16,25 @@ import Footer from "@/components/footer";
 
 const Home = () => {
     return (
-        <div className="w-screen h-screen font-itim">
+        <div className="h-screen font-itim">
 
             <NavBar />
             <div
                 id="section-1"
-                className="bg-white flex flex-col sm:flex-row"
+                className=""
                 style={{
                     background: 'url(/home/home-bg-full.png) no-repeat center center',
                     backgroundSize: 'cover',
-                    width: '100vw',
                     height: 'auto',
                     minHeight: '100vh',
                     display: 'flex',
                 }}
             >
 
-{/* mt-9 px-1 scale-75 */}
-
                 <div className="sm:hidden mt-12 px-3">
-                    <h1 className="text-center sm:text-left text-4xl">Get notes, or bucks. 
+                    <h1 className="text-center sm:text-left text-4xl">Get notes, or bucks.
                         Whichever you need.</h1>
-                        
+
                     <h4 className="text-gray-500 text-center sm:text-left text-xl">Join a community of students from <br /> all around the world.</h4>
                 </div>
 
@@ -65,8 +62,8 @@ const Home = () => {
                         </Button>
                     </form>
                 </div>
-                
-                
+
+
             </div>
 
             <div id="section-2" className="p-5 sm:p-20 flex flex-col sm:flex-row justify-between bg-[url('/BackgroundImage.png')]">
@@ -99,13 +96,70 @@ const Home = () => {
                 </Card>
             </div>
 
-            <div id="section-3" className="p-5 sm:p-20 bg-white">
-                <h1 className="mb-8 sm:mb-16 text-center sm:text-left">Anywhere, any note.</h1>
-                <div id="container" className="flex flex-col sm:flex-row justify-center sm:justify-between items-center">
-                    <img src="/Home3A.png" className="w-full sm:w-auto" />
-                    <img src="/Home3B.png" className="w-full sm:w-auto" />
+            <div className="flex flex-col p-5 sm:p-20 bg-white">
+                <div>
+                    <h1 className="mb-8 sm:mb-16 text-center sm:text-left">Anywhere, any note.</h1>
                 </div>
+
+                <div className="flex flex-row gap-20">
+                    <div className="sm:w-1/2 grid grid-cols-3 gap-4">
+                        <img src="/univ/binus.jpg" alt="" className="w-[150px] h-auto object-cover" />
+                        <img src="/univ/itb.png" alt="" className="w-[150px] h-auto object-cover" />
+                        <img src="/univ/ui.png" alt="" className="w-[150px] h-auto object-cover" />
+                        <img src="/univ/brawijaya.jpeg" alt="" className="w-[150px] h-auto object-cover" />
+                        <img src="/univ/unpad.png" alt="" className="w-[150px] h-auto object-cover" />
+                        <img src="/univ/ukp.jpeg" alt="" className="w-[150px] h-auto object-cover" />
+                    </div>
+
+                    <div className="sm:w-1/2 flex justify-center items-center">
+                        <img src="/Home3B.png" className="w-full sm:w-auto max-w-full object-cover" alt="Girl Image" />
+                    </div>
+                </div>
+
             </div>
+
+            {/* <div id="section-3" className="p-5 sm:p-20 bg-white">
+                <h1 className="mb-8 sm:mb-16 text-center sm:text-left">Anywhere, any note.</h1>
+
+                <div className="flex flex-wrap gap-4">
+
+                    <div className="sm:w-1/2 grid grid-cols-3 gap-4">
+                        <img src="/univ/binus.jpg" alt="" className="w-[150px] h-auto object-cover" />
+                        <img src="/univ/itb.png" alt="" className="w-[150px] h-auto object-cover" />
+                        <img src="/univ/ui.png" alt="" className="w-[150px] h-auto object-cover" />
+                        <img src="/univ/brawijaya.jpeg" alt="" className="w-[150px] h-auto object-cover" />
+                        <img src="/univ/unpad.png" alt="" className="w-[150px] h-auto object-cover" />
+                        <img src="/univ/ukp.jpeg" alt="" className="w-[150px] h-auto object-cover" />
+                    </div>
+
+                    <div className="sm:w-1/2 flex justify-center items-center">
+                        <img src="/Home3B.png" className="w-full sm:w-auto max-w-full object-cover" alt="Girl Image" />
+                    </div>
+                </div>
+            </div> */}
+
+
+
+
+
+
+            {/* <div id="section-3" className="p-5 sm:p-20 bg-white">
+                <h1 className="mb-8 sm:mb-16 text-center sm:text-left">Anywhere, any note.</h1>
+
+                <img src="/univ/binus.jpg" alt="" />
+                <img src="/univ/itb.png" alt="" />
+                <img src="/univ/ui.png" alt="" />
+                <img src="/univ/brawijaya.jpeg" alt="" />
+                <img src="/univ/unpad.png" alt="" />
+                <img src="/univ/ukp.jpeg" alt="" />
+
+
+                <div id="container" className="">
+                    <img src="/Home3A.png" className="flex-grow w-full sm:w-auto max-w-full" alt="Image 1" />
+                    <img src="/Home3B.png" className="flex-grow w-full sm:w-auto max-w-full" alt="Image 2" />
+                </div>
+            </div> */}
+
 
             <Footer />
         </div>
