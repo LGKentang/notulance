@@ -97,9 +97,7 @@ const Home = () => {
             </div>
 
             <div className="flex flex-col p-5 sm:p-20 bg-white">
-                <div>
-                    <h1 className="mb-8 sm:mb-16 text-center sm:text-left">Anywhere, any note.</h1>
-                </div>
+                -
 
                 <div className="flex flex-col sm:flex-row gap-20">
                     <div className="sm:w-1/2 grid grid-cols-2 sm:grid-cols-3 gap-4 justify-items-center items-center">
@@ -139,6 +137,18 @@ const Home = () => {
                     <img src="/Home3B.png" className="flex-grow w-full sm:w-auto max-w-full" alt="Image 2" />
                 </div>
             </div> */}
+
+            <hr />
+
+            <div className="flex flex-row p-5 sm:p-20 bg-white">
+                <div>
+                    <h1 className="mb-8 sm:mb-16 text-center sm:text-left">Fill out our survey form right here.</h1>
+                </div>
+                <div className="sm:w-1/2 flex justify-center items-center">
+
+                    <img className="w-[240px]" src="/notulanceqr.png"></img>
+                </div>
+            </div>
 
 
             <Footer />
