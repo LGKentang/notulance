@@ -23,7 +23,9 @@ const Search = () => {
         }));
     };
 
-    const handleSearch = async() => {
+    const thumbnailUrl = 'https://firebasestorage.googleapis.com/v0/b/notulance.appspot.com/o/notulance.png?alt=media&token=ca7cffc9-c3fb-43a7-9ce6-edec3d7a5af5'
+
+    const handleSearch = async () => {
         console.log(filter)
 
         const isFilterUsed = Object.values(filter).some(value => value);
@@ -31,9 +33,9 @@ const Search = () => {
 
         const tempIds = await searchNotes(search, isFilterUsed, filter);
 
-        if(tempIds != null){
+        if (tempIds != null) {
             console.log(tempIds)
-            
+
             const tempNotes = [];
             for (const element of tempIds) {
                 const note = await getNoteById(element);
@@ -56,13 +58,13 @@ const Search = () => {
             <div className="flex flex-col w-full px-6 sm:px-32 md:px-52 py-6">
                 {/* Search Bar */}
                 <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-5 mb-2">
-                    <Input 
-                        placeholder="Search..." 
+                    <Input
+                        placeholder="Search..."
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                         className="text-xl p-4 w-full md:w-[75%]"
                     />
-                    <Button 
+                    <Button
                         variant="destructive"
                         onClick={handleSearch}
                         className="text-xl p-4 w-full md:w-[25%]"
@@ -135,17 +137,23 @@ const Search = () => {
                 </div>
             </div>
 
-            
+
             {/* Notes */}
             {notes && notes.length > 0 ? (
                 <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 px-6 sm:px-24 md:px-40 justify-between gap-10 mb-4">
                     {notes.map((note, index) => {
-                        return(
+                        return (
                             <a href={`/note/preview/${note.id}`} key={index}>
-                                <Card className="border-black border-2 drop-shadow-2xl">
+                                <Card className="border-black border-2 drop-shadow-2xl h-[400px]">
+                                    
                                     <CardHeader className="flex p-0 w-full max-h-48 items-center overflow-hidden">
-                                        <img src={note.thumbnailUrl} alt="" />
+                                        <img
+                                            src={note.thumbnailUrl == "https://example.com/thumbnail.jpg" ? thumbnailUrl : note.thumbnailUrl }
+                                            alt={note.title}
+                                            className="w-full h-48 object-cover" // Fallback in case of error
+                                        />
                                     </CardHeader>
+
                                     <Separator />
                                     <CardContent className="p-2">
                                         <h1 className="text-xl">{note.title}</h1>
@@ -162,11 +170,11 @@ const Search = () => {
                 </div>
             ) : (
                 <div className="flex px-6 sm:px-32 md:px-40 justify-center text-red-500">
-                    <img src="/loading.png"/>
+                    <img src="/loading.png" />
                     <h1 className="pt-32">Loading.. .. ..</h1>
                 </div>
             )}
-        <Footer />
+            <Footer />
         </div>
     );
 };
